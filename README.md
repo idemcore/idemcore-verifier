@@ -25,7 +25,7 @@ You do not need it to check a claim: the verifier only needs two logs.
 
 ## Reproduce in 5 minutes
 
-You need `git` and Python ≥ 3.8. No GPU, no model and no third-party package.
+You need `git` and Python ≥ 3.9. No GPU, no model and no third-party package.
 
 ```sh
 # 1. get the verifier and the sample logs (about 6 MB)
@@ -102,7 +102,7 @@ repository.
 
 All hash tables, per device, workload and batch size: [EVIDENCE.md](EVIDENCE.md).
 
-Requires Python ≥ 3.8, standard library only.
+Requires Python ≥ 3.9, standard library only.
 
 ## What the verifier checks
 
