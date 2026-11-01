@@ -79,8 +79,8 @@ receipt to every answer, and `GET /v1/receipts/{id}/log` returns that answer's
 per-token log. The API serves the public form of the log (`log_format`
 `idemcore-log/r1-public`): the `pi j h hc` fields of [SPEC.md](SPEC.md) plus the
 `ALL` line, without `freq` and `total`. The verifier accepts both forms (version
-0.3.0 and later). Access currently needs an API key (request one at
-<https://idemcore.net/#access>). With a key, save the log and run:
+0.3.0 and later). Access needs an API key: sign in to the console at
+<https://console.idemcore.net/#/login> and create one. With a key, save the log and run:
 
 ```sh
 curl -s https://api.idemcore.net/v1/receipts/RECEIPT_ID/log \
@@ -91,11 +91,12 @@ python3 -m idemcore_verify compare answer.log your_rerun.log
 
 ### Install as a package
 
-The verifier is also packaged as `idemcore-verify` (console script of the same
-name). Until it is published on PyPI, install it from this repository:
+The verifier is published on PyPI as
+[`idemcore-verify`](https://pypi.org/project/idemcore-verify/) (console script of
+the same name):
 
 ```sh
-pip install git+https://github.com/idemcore/idemcore-verifier.git
+pip install idemcore-verify
 idemcore-verify --version
 idemcore-verify check run.log
 idemcore-verify compare reference.log candidate.log
@@ -148,10 +149,9 @@ Qwen2.5-7B 4-bit on Android runs at 3.39 tok/s on the Fold5 (see [RESULTS.md](RE
 on an NVIDIA A10G serves up to 64 concurrent streams, and every stream's
 per-token hashes match a single-stream x86-64 run at batch sizes 1, 8, 16, 32
 and 64, including shuffled slot order and staggered joins (0 mismatches).
-The same holds on an NVIDIA A10. Aggregate throughput (A10G): 641 tok/s at 8 streams (on par with vLLM AWQ) and
-1372 tok/s at 32. vLLM is faster at 16 or more streams. In the same session,
-vLLM and llama.cpp were not bit-reproducible across batch compositions at
-default settings in our runs. Numbers and caveats: [RESULTS.md](RESULTS.md#2b-batched-serving-qwen25-7b-4-bit-g-nvidia-a10g).
+The same holds on an NVIDIA A10. Aggregate throughput (A10G): 641 tok/s at 8
+streams and 1372 tok/s at 32. Numbers and caveats:
+[RESULTS.md](RESULTS.md#2b-batched-serving-qwen25-7b-4-bit-g-nvidia-a10g).
 The raw batched logs are in `samples/batched/` and are re-checked by step 3 above.
 
 ## Methodology and benchmarks
@@ -160,8 +160,8 @@ The raw batched logs are in `samples/batched/` and are re-checked by step 3 abov
   quality): [METHODOLOGY.md](METHODOLOGY.md).
 * Results and their caveats: [RESULTS.md](RESULTS.md); every hash, per device,
   workload and batch size: [EVIDENCE.md](EVIDENCE.md).
-* The serving-benchmark kit used for the H100 comparison in the paper will be
-  published separately and linked here.
+* The serving-benchmark kit used in the paper will be published separately and
+  linked here.
 
 ## Paper
 
