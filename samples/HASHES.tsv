@@ -1,0 +1,66 @@
+# file	kind	model	workload	device	batch	schedule	rows	ALL (stream 0 for batch logs)	STREAMS digest (batch logs)
+qwen2.5-0.5b-int8/x86_64.log	single	Qwen2.5-0.5B 8-bit	W3260	x86-64 CPU (Intel Xeon VM)	1	-	3260	5cd062ce79583b61	-
+qwen2.5-0.5b-int8/nvidia_t4.log	single	Qwen2.5-0.5B 8-bit	W3260	NVIDIA T4	1	-	3260	5cd062ce79583b61	-
+qwen2.5-0.5b-int8/x86_64_sub240.log	single	Qwen2.5-0.5B 8-bit	W240	x86-64 CPU	1	-	240	86b78a45359fa0e2	-
+qwen2.5-0.5b-int8/android_fold5_sub240.log	single	Qwen2.5-0.5B 8-bit	W240	Galaxy Z Fold5, 1 thread	1	-	240	86b78a45359fa0e2	-
+qwen2.5-0.5b-int8/windows_arm64_snapdragon_x_sub240.log	single	Qwen2.5-0.5B 8-bit	W240	Windows 11 ARM64 (Snapdragon X Plus), 1 thread	1	-	240	86b78a45359fa0e2	-
+qwen2.5-7b-int8/x86_64.log	single	Qwen2.5-7B 8-bit	W512	x86-64 CPU, 8 threads	1	-	512	99d2f1efe2135c18	-
+qwen2.5-7b-int8/nvidia_a10.log	single	Qwen2.5-7B 8-bit	W512	NVIDIA A10	1	-	512	99d2f1efe2135c18	-
+qwen2.5-7b-int8/android_fold5_first64.log	single	Qwen2.5-7B 8-bit	W64	Galaxy Z Fold5, 4 threads	1	-	64	92161a9755d5a296	-
+qwen2.5-7b-int4-g/x86_64.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 8 threads	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/x86_64_repeat/t8_run1.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 8 pinned threads, repeat 1	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/x86_64_repeat/t8_run2.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 8 pinned threads, repeat 2	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/x86_64_repeat/t8_run3.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 8 pinned threads, repeat 3	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/x86_64_repeat/t6_run1.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 6 pinned threads, repeat 1	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/x86_64_repeat/t6_run2.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 6 pinned threads, repeat 2	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/x86_64_repeat/t6_run3.log	single	Qwen2.5-7B 4-bit (g)	W512	x86-64 CPU, 6 pinned threads, repeat 3	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/nvidia_a10.log	single	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	1	-	512	a921e042378ae5a7	-
+qwen2.5-7b-int4-g/android_fold5_first128.log	single	Qwen2.5-7B 4-bit (g)	W128	Galaxy Z Fold5, 4 big cores (first run)	1	-	128	8d694e5c633851cc	-
+qwen2.5-7b-int4-g/android_fold5_first128_pathA.log	single	Qwen2.5-7B 4-bit (g)	W128	Galaxy Z Fold5, 4 big cores, CPU path A (default)	1	-	128	8d694e5c633851cc	-
+qwen2.5-7b-int4-g/android_fold5_first128_pathB.log	single	Qwen2.5-7B 4-bit (g)	W128	Galaxy Z Fold5, 4 big cores, CPU path B (compatibility)	1	-	128	8d694e5c633851cc	-
+qwen2.5-7b-int4-g4/x86_64.log	single	Qwen2.5-7B 4-bit (g4)	W512	x86-64 CPU	1	-	512	4765031d077c0202	-
+qwen2.5-7b-int4-g4/nvidia_a10g.log	single	Qwen2.5-7B 4-bit (g4)	W512	NVIDIA A10G	1	-	512	4765031d077c0202	-
+gpt-oss-20b/x86_64.log	single	gpt-oss-20b (MoE)	W512	x86-64 CPU, 16 threads	1	-	512	8ec348aaf3b4109c	-
+gpt-oss-20b/nvidia_l40s.log	single	gpt-oss-20b (MoE)	W512	NVIDIA L40S	1	-	512	8ec348aaf3b4109c	-
+gpt-oss-120b/x86_64_first4x32.log	single	gpt-oss-120b (MoE)	W4x32	x86-64 CPU, 16 threads (spot check)	1	-	128	95b6e5a6f0a2f1e7	-
+gpt-oss-120b/nvidia_h100.log	single	gpt-oss-120b (MoE)	W512	NVIDIA H100 80GB	1	-	512	024c898ae3cff89e	-
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b1.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	1	in order	512	a921e042378ae5a7	a947839ae8d342f6
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b8.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	8	in order	4096	a921e042378ae5a7	2828ba1f6d95db01
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b16.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	16	in order	8192	a921e042378ae5a7	adf245b7df2665c4
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b32.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	32	in order	16384	a921e042378ae5a7	bbadca559405cb60
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	64	in order	32768	a921e042378ae5a7	9ea9c265503d1a40
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b16_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	16	shuffled slots	8192	a921e042378ae5a7	adf245b7df2665c4
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	32	shuffled slots	16384	a921e042378ae5a7	bbadca559405cb60
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	64	shuffled slots	32768	a921e042378ae5a7	9ea9c265503d1a40
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b16_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	16	staggered joins	8192	a921e042378ae5a7	4f619a3bedff14af
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	32	staggered joins	16384	a921e042378ae5a7	c17249fc5eb5a77f
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10G	64	staggered joins	32768	a921e042378ae5a7	053e6f9df9d0e848
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b1.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	1	in order	128	8d694e5c633851cc	da7752b1247bbff7
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b8.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	8	in order	1024	8d694e5c633851cc	89e358a3bac09fe9
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b16.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	16	in order	2048	8d694e5c633851cc	d590bd3506523693
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b32.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	32	in order	4096	8d694e5c633851cc	763c1665de4e5198
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b64.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	64	in order	8192	8d694e5c633851cc	9a241b64b19d222e
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	32	shuffled slots	4096	8d694e5c633851cc	763c1665de4e5198
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	64	shuffled slots	8192	8d694e5c633851cc	9a241b64b19d222e
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	32	staggered joins	4096	8d694e5c633851cc	535aa115282d7598
+batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10G	64	staggered joins	8192	8d694e5c633851cc	112f81d4bc97c1d0
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b1.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	1	in order	512	a921e042378ae5a7	a947839ae8d342f6
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b8.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	8	in order	4096	a921e042378ae5a7	2828ba1f6d95db01
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b16.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	16	in order	8192	a921e042378ae5a7	adf245b7df2665c4
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b32.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	32	in order	16384	a921e042378ae5a7	bbadca559405cb60
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b64.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	64	in order	32768	a921e042378ae5a7	9ea9c265503d1a40
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b16_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	16	shuffled slots	8192	a921e042378ae5a7	adf245b7df2665c4
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	32	shuffled slots	16384	a921e042378ae5a7	bbadca559405cb60
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	64	shuffled slots	32768	a921e042378ae5a7	9ea9c265503d1a40
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b16_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	16	staggered joins	8192	a921e042378ae5a7	4f619a3bedff14af
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	32	staggered joins	16384	a921e042378ae5a7	c17249fc5eb5a77f
+batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W512	NVIDIA A10	64	staggered joins	32768	a921e042378ae5a7	053e6f9df9d0e848
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b1.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	1	in order	128	8d694e5c633851cc	da7752b1247bbff7
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b8.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	8	in order	1024	8d694e5c633851cc	89e358a3bac09fe9
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b16.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	16	in order	2048	8d694e5c633851cc	d590bd3506523693
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	32	in order	4096	8d694e5c633851cc	763c1665de4e5198
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	64	in order	8192	8d694e5c633851cc	9a241b64b19d222e
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	32	shuffled slots	4096	8d694e5c633851cc	763c1665de4e5198
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	64	shuffled slots	8192	8d694e5c633851cc	9a241b64b19d222e
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	32	staggered joins	4096	8d694e5c633851cc	535aa115282d7598
+batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g)	W128	NVIDIA A10	64	staggered joins	8192	8d694e5c633851cc	112f81d4bc97c1d0
