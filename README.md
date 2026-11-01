@@ -1,5 +1,7 @@
 # idemcore-verifier
 
+[![verify](https://github.com/idemcore/idemcore-verifier/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/idemcore/idemcore-verifier/actions/workflows/verify.yml)
+
 **Check, without trusting us, that two machines produced bit-identical LLM inference.**
 
 Project site: <https://idemcore.net>
