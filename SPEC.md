@@ -25,6 +25,19 @@ has width ≥ 1. The probability the engine assigns to token `t` is exactly
 FNV-1a-64: offset basis `0xcbf29ce484222325`, prime `0x100000001b3`,
 `h = (h XOR byte) * prime mod 2^64` per byte.
 
+## Public form
+
+A log served by the hosted API (`log_format` `idemcore-log/r1-public`) carries
+only the first four fields of each per-token line:
+
+```
+<pi> <j> <h> <hc>
+```
+
+The `ALL` line below depends only on `h` and `hc`, so it is identical for the
+full and the public form of the same run. When two lines are compared and
+either of them is in public form, only `h` and `hc` are compared.
+
 ## Chain line
 
 ```

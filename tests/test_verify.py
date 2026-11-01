@@ -40,6 +40,25 @@ class T(unittest.TestCase):
         self.assertEqual((res.first_divergence["pi"], res.first_divergence["j"]),
                          (ref.tokens[100].pi, ref.tokens[100].j))
 
+    def test_public_four_field_log(self):
+        # The hosted API serves `pi j h hc` lines (idemcore-log/r1-public).
+        p = os.path.join(S, "qwen2.5-7b-int4-g", "x86_64.log")
+        with open(p) as fh:
+            lines = fh.read().splitlines()
+        pub = [" ".join(l.split()[:4]) if l[:1].isdigit() else l for l in lines]
+        log = parse_log("public", pub)
+        r = check_log(log)
+        self.assertTrue(r.ok, r.errors)
+        self.assertEqual(r.all_recomputed, check_log(parse_log(p)).all_recomputed)
+        self.assertTrue(compare_logs(parse_log(p), log).ok)
+        f = pub[100].split()
+        f[3] = "%016x" % (int(f[3], 16) ^ 1)
+        bad = pub[:100] + [" ".join(f)] + pub[101:]
+        self.assertFalse(check_log(parse_log("bad", bad)).ok)
+        self.assertFalse(compare_logs(parse_log(p), parse_log("bad", bad)).ok)
+        five = pub[:100] + [pub[100] + " 7"] + pub[101:]
+        self.assertFalse(check_log(parse_log("five", five)).ok)
+
 if __name__ == "__main__":
     unittest.main()
 

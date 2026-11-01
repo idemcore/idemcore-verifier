@@ -12,6 +12,14 @@ A log is a text file with one line per generated/scored token:
   freq   CDF width of the observed token: CUM[t+1] - CUM[t], decimal
   total  CDF total CUM[V], decimal, 0 < total < 2**31
 
+The hosted API serves the *public* form of the same log
+(``idemcore-log/r1-public``): the first four fields only,
+
+    <pi> <j> <h> <hc>
+
+This verifier accepts both forms. ``ALL`` depends only on ``h`` and ``hc``, so
+it is the same for the full and the public form of a run.
+
 followed by a chain line
 
     ALL <16 hex>
@@ -53,8 +61,8 @@ class TokenLine:
     j: int
     h: int
     hc: int
-    freq: int
-    total: int
+    freq: Optional[int]   # None in a public (4-field) log line
+    total: Optional[int]
     lineno: int
 
     @property
@@ -106,21 +114,23 @@ def parse_log(path: str, lines: Optional[Iterable[str]] = None) -> Log:
             continue
         if not p[0].isdigit():
             continue  # reserved keyword line (format v1 ignores it)
-        if len(p) != 6:
-            errors.append(f"line {n}: expected 6 fields, got {len(p)}")
+        if len(p) not in (4, 6):
+            errors.append(f"line {n}: expected 6 fields (or 4 in a public log), got {len(p)}")
             continue
         try:
             pi, j = int(p[0]), int(p[1])
             if len(p[2]) != 16 or len(p[3]) != 16:
                 raise ValueError("hash field is not 16 hex digits")
             h, hc = int(p[2], 16), int(p[3], 16)
-            freq, total = int(p[4]), int(p[5])
+            freq = total = None
+            if len(p) == 6:
+                freq, total = int(p[4]), int(p[5])
         except ValueError as e:
             errors.append(f"line {n}: {e}")
             continue
-        if not (0 < total < 2 ** 31):
+        if total is not None and not (0 < total < 2 ** 31):
             errors.append(f"line {n}: total {total} out of range (0, 2^31)")
-        if not (0 < freq <= total):
+        if freq is not None and total is not None and not (0 < freq <= total):
             errors.append(f"line {n}: freq {freq} not in (0, total]")
         if (pi, j) in seen:
             errors.append(f"line {n}: duplicate position ({pi},{j})")
@@ -159,6 +169,15 @@ class CompareResult:
     mode: str
 
 
+def _diff_fields(r: TokenLine, c: TokenLine) -> List[str]:
+    """Fields that differ. freq/total are compared only when both lines carry
+    them (a public 4-field log line has neither)."""
+    out = [f for f in ("h", "hc") if getattr(r, f) != getattr(c, f)]
+    if r.freq is not None and c.freq is not None:
+        out += [f for f in ("freq", "total") if getattr(r, f) != getattr(c, f)]
+    return out
+
+
 def compare_logs(ref: Log, cand: Log, subset: bool = False) -> CompareResult:
     """Compare candidate against reference position by position.
 
@@ -172,7 +191,7 @@ def compare_logs(ref: Log, cand: Log, subset: bool = False) -> CompareResult:
     first = None
     for k in keys:
         r, c = R[k], C[k]
-        diff = [f for f in ("h", "hc", "freq", "total") if getattr(r, f) != getattr(c, f)]
+        diff = _diff_fields(r, c)
         if not diff:
             matched += 1
         elif first is None:
@@ -328,7 +347,7 @@ def compare_batch(ref: Log, batch: BatchLog) -> BatchCompareResult:
                 first = {"stream": sid, "pi": t.pi, "j": t.j, "fields": ["missing in reference"],
                          "cand_line": t.lineno}
             continue
-        diff = [f for f in ("h", "hc", "freq", "total") if getattr(r, f) != getattr(t, f)]
+        diff = _diff_fields(r, t)
         if not diff:
             matched += 1
         elif first is None:

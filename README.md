@@ -76,11 +76,15 @@ required; every `make` target is a one-line Python command.
 
 The hosted API (`https://api.idemcore.net/v1`, OpenAI-compatible) attaches a
 receipt to every answer, and `GET /v1/receipts/{id}/log` returns that answer's
-per-token log in the format of [SPEC.md](SPEC.md). Access currently needs an API
-key (request one at <https://idemcore.net/#access>). With a key, save the log
-and run:
+per-token log. The API serves the public form of the log (`log_format`
+`idemcore-log/r1-public`): the `pi j h hc` fields of [SPEC.md](SPEC.md) plus the
+`ALL` line, without `freq` and `total`. The verifier accepts both forms (version
+0.3.0 and later). Access currently needs an API key (request one at
+<https://idemcore.net/#access>). With a key, save the log and run:
 
 ```sh
+curl -s https://api.idemcore.net/v1/receipts/RECEIPT_ID/log \
+  -H "Authorization: Bearer $IDEMCORE_API_KEY" | jq -r .log_text > answer.log
 python3 -m idemcore_verify check answer.log
 python3 -m idemcore_verify compare answer.log your_rerun.log
 ```
