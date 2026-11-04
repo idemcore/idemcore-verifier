@@ -32,7 +32,7 @@ dependencies = []
 
 [project.urls]
 Homepage = "https://idemcore.net"
-Paper = "https://doi.org/10.5281/zenodo.23851129"
+Paper = "https://doi.org/10.5281/zenodo.23851128"
 Source = "https://github.com/idemcore/idemcore-verifier"
 Issues = "https://github.com/idemcore/idemcore-verifier/issues"
 

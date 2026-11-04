@@ -1,7 +1,10 @@
 # Sample logs
 
 All logs are raw output of real runs, unedited except whitespace
-normalisation and removal of lines that format v1 does not use. Recompute any `ALL` with `python3 -m idemcore_verify check`.
+normalisation, removal of lines that format v1 does not use, and (since
+0.3.2) reduction to the hash-only form of [SPEC.md](../SPEC.md): each token
+line keeps `pi j h hc` (batched: `s pi j h hc`). `ALL` and `STREAMS` depend
+only on `h` and `hc`, so every published digest is unchanged. Recompute any `ALL` with `python3 -m idemcore_verify check`.
 
 | File | Model | Device | Positions | ALL |
 |---|---|---|---|---|

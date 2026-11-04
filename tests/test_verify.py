@@ -59,6 +59,23 @@ class T(unittest.TestCase):
         five = pub[:100] + [pub[100] + " 7"] + pub[101:]
         self.assertFalse(check_log(parse_log("five", five)).ok)
 
+    def test_legacy_six_field_log(self):
+        # Logs written before 0.3.2 carry two extra integers per line; they
+        # are range-checked and compared but are not part of ALL.
+        p = os.path.join(S, "qwen2.5-7b-int4-g", "x86_64.log")
+        with open(p) as fh:
+            lines = fh.read().splitlines()
+        six = [l + " 3 7" if l[:1].isdigit() else l for l in lines]
+        log6 = parse_log("six", six)
+        r = check_log(log6)
+        self.assertTrue(r.ok, r.errors)
+        self.assertEqual(r.all_recomputed, check_log(parse_log(p)).all_recomputed)
+        self.assertTrue(compare_logs(parse_log(p), log6).ok)      # hash-only vs 6-field
+        other = [l + " 4 7" if l[:1].isdigit() else l for l in lines]
+        self.assertFalse(compare_logs(log6, parse_log("other", other)).ok)
+        bad = six[:100] + [" ".join(six[100].split()[:4] + ["0", "7"])] + six[101:]
+        self.assertFalse(check_log(parse_log("bad", bad)).ok)    # range check
+
 if __name__ == "__main__":
     unittest.main()
 
@@ -94,6 +111,20 @@ class BatchTests(unittest.TestCase):
             self.assertFalse(compare_batch(parse_log(self.REF), b).ok)
         finally:
             os.unlink(t.name)
+
+    def test_batch_hash_only_and_legacy(self):
+        from idemcore_verify.core import check_batch_log, compare_batch, parse_batch_log, read_lines
+        lines = read_lines(self.B)
+        five = parse_batch_log("five", lines)
+        self.assertTrue(all(t.freq is None for _, t in five.rows))
+        seven = [l + " 3 7" if l[:1].isdigit() else l for l in lines]
+        b7 = parse_batch_log("seven", seven)
+        c5, c7 = check_batch_log(five), check_batch_log(b7)
+        self.assertTrue(c7.ok, c7.errors)
+        self.assertEqual(c5.streams_digest, c7.streams_digest)
+        self.assertTrue(compare_batch(parse_log(self.REF), b7).ok)
+        six = [l + " 3" if l[:1].isdigit() else l for l in lines[:50]] + lines[50:]
+        self.assertFalse(check_batch_log(parse_batch_log("six", six)).ok)
 
     def test_self_check_passes(self):
         import contextlib, io

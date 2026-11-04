@@ -1,7 +1,7 @@
 {
   "title": "idemcore-verifier: open log format, verifier and evidence for bit-identical LLM inference across CPUs, phones and GPUs",
   "upload_type": "software",
-  "version": "0.2.0",
+  "version": "0.3.2",
   "creators": [
     {
       "name": "Wick, Don",
@@ -28,7 +28,7 @@
       "resource_type": "other"
     },
     {
-      "identifier": "10.5281/zenodo.23851129",
+      "identifier": "10.5281/zenodo.23949090",
       "relation": "isSupplementTo",
       "resource_type": "publication-preprint",
       "scheme": "doi"

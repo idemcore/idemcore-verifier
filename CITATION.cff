@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use these logs or the verifier, please cite them as below."
 title: "idemcore-verifier: open log format, verifier and evidence for bit-identical LLM inference across CPUs, phones and GPUs"
-version: 0.3.1
-date-released: "2026-11-01"
+version: 0.3.2
+date-released: "2026-11-04"
 license: Apache-2.0
 type: software
 authors:
@@ -27,7 +27,7 @@ preferred-citation:
       given-names: Don
       orcid: "https://orcid.org/0009-0003-0259-8288"
       affiliation: "MATEIAM COMPANY LIMITED"
-  doi: 10.5281/zenodo.23851129
+  doi: 10.5281/zenodo.23949090
   year: 2026
   publisher:
     name: Zenodo

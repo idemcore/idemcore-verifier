@@ -13,13 +13,14 @@ A log is a text file with one line per generated/scored token:
   total  opaque engine-defined integer, decimal; 0 < freq <= total < 2**31
          (freq/total are range-checked and compared, but are not part of ALL)
 
-The hosted API serves the *public* form of the same log
-(``idemcore-log/r1-public``): the first four fields only,
+The *hash-only* (public) form of the same log (``idemcore-log/r1-public``,
+served by the hosted API and used for the published sample logs) carries the
+first four fields only,
 
     <pi> <j> <h> <hc>
 
 This verifier accepts both forms. ``ALL`` depends only on ``h`` and ``hc``, so
-it is the same for the full and the public form of a run.
+it is the same for the full and the hash-only form of a run.
 
 followed by a chain line
 
@@ -116,7 +117,7 @@ def parse_log(path: str, lines: Optional[Iterable[str]] = None) -> Log:
         if not p[0].isdigit():
             continue  # reserved keyword line (format v1 ignores it)
         if len(p) not in (4, 6):
-            errors.append(f"line {n}: expected 6 fields (or 4 in a public log), got {len(p)}")
+            errors.append(f"line {n}: expected 6 fields (or 4 in a hash-only log), got {len(p)}")
             continue
         try:
             pi, j = int(p[0]), int(p[1])
@@ -216,7 +217,8 @@ def compare_logs(ref: Log, cand: Log, subset: bool = False) -> CompareResult:
 # ---------------------------------------------------------------------------
 # Batched (multi-stream) logs, format v1-batch.  See SPEC.md, "Batched logs".
 #
-#     <s> <pi> <j> <h> <hc> <freq> <total>      one line per token of stream s
+#     <s> <pi> <j> <h> <hc> [<freq> <total>]    one line per token of stream s
+#                                               (hash-only form: first 5 fields)
 #     ALL <s> <16 hex>                          chain of stream s, in file order
 #
 # Stream ids >= FILLER_BASE mark filler work that occupied a slot before a
@@ -269,21 +271,23 @@ def parse_batch_log(path: str, lines: Optional[Iterable[str]] = None) -> BatchLo
             continue
         if not p[0].isdigit():
             continue  # reserved keyword line
-        if len(p) != 7:
-            errors.append(f"line {n}: expected 7 fields, got {len(p)}")
+        if len(p) not in (5, 7):
+            errors.append(f"line {n}: expected 7 fields (or 5 in a hash-only log), got {len(p)}")
             continue
         try:
             sid, pi, j = int(p[0]), int(p[1]), int(p[2])
             if len(p[3]) != 16 or len(p[4]) != 16:
                 raise ValueError("hash field is not 16 hex digits")
             h, hc = int(p[3], 16), int(p[4], 16)
-            freq, total = int(p[5]), int(p[6])
+            freq = total = None
+            if len(p) == 7:
+                freq, total = int(p[5]), int(p[6])
         except ValueError as e:
             errors.append(f"line {n}: {e}")
             continue
-        if not (0 < total < 2 ** 31):
+        if total is not None and not (0 < total < 2 ** 31):
             errors.append(f"line {n}: total {total} out of range (0, 2^31)")
-        if not (0 < freq <= total):
+        if freq is not None and total is not None and not (0 < freq <= total):
             errors.append(f"line {n}: freq {freq} not in (0, total]")
         rows.append((sid, TokenLine(pi, j, h, hc, freq, total, n)))
     return BatchLog(path, rows, alls, errors)

@@ -24,18 +24,20 @@ compares them between logs, but they are not part of `ALL`.
 FNV-1a-64: offset basis `0xcbf29ce484222325`, prime `0x100000001b3`,
 `h = (h XOR byte) * prime mod 2^64` per byte.
 
-## Public form
+## Hash-only (public) form
 
-A log served by the hosted API (`log_format` `idemcore-log/r1-public`) carries
-only the first four fields of each per-token line:
+A hash-only log (`log_format` `idemcore-log/r1-public`) carries only the first
+four fields of each per-token line:
 
 ```
 <pi> <j> <h> <hc>
 ```
 
-The `ALL` line below depends only on `h` and `hc`, so it is identical for the
-full and the public form of the same run. When two lines are compared and
-either of them is in public form, only `h` and `hc` are compared.
+The hosted API serves this form, and the sample logs in `samples/` are
+published in it (since verifier 0.3.2). The `ALL` line below depends only on
+`h` and `hc`, so it is identical for the full and the hash-only form of the
+same run. When two lines are compared and either of them is hash-only, only
+`h` and `hc` are compared. The verifier keeps accepting six-field logs.
 
 ## Chain line
 
@@ -72,7 +74,8 @@ ALL <s> <16 hex>
 ```
 
 * `s` (decimal) is the stream id. Fields after it are exactly as in the
-  per-token line above.
+  per-token line above, in full (`<freq> <total>` present, 7 fields) or
+  hash-only form (`<s> <pi> <j> <h> <hc>`, 5 fields).
 * `ALL <s>` is the chained digest of stream `s`, computed as in the chain
   line over that stream's lines in file order (lines of other streams are
   skipped). One `ALL <s>` line per stream.

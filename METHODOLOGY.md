@@ -19,8 +19,9 @@ Everything here can be reproduced with public tools. The numbers in
 * The reference is the x86-64 CPU build (1 to 16 threads). The
   candidate is the same model file run on another device or another thread
   count.
-* A pair counts as **identical** only if `h`, `hc`, `freq` and `total` all
-  agree at every compared position (`idemcore_verify compare`).
+* A pair counts as **identical** only if `h` and `hc` (and `freq` and
+  `total`, when both logs carry them) agree at every compared position
+  (`idemcore_verify compare`). The published sample logs are hash-only.
 * For the largest models, CPU reference time is limited, so we compare a
   spot-check subset (gpt-oss-120b: first 32 positions of each of the 4
   payloads, 128 positions). These runs are labelled "subset".

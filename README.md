@@ -79,7 +79,8 @@ receipt to every answer, and `GET /v1/receipts/{id}/log` returns that answer's
 per-token log. The API serves the public form of the log (`log_format`
 `idemcore-log/r1-public`): the `pi j h hc` fields of [SPEC.md](SPEC.md) plus the
 `ALL` line, without `freq` and `total`. The verifier accepts both forms (version
-0.3.0 and later). Access needs an API key: sign in to the console at
+0.3.0 and later; hash-only batched logs from 0.3.2). The sample logs in
+`samples/` are published in the same hash-only form. Access needs an API key: sign in to the console at
 <https://console.idemcore.net/#/login> and create one. With a key, save the log and run:
 
 ```sh
@@ -111,8 +112,9 @@ Requires Python ≥ 3.9, standard library only.
 
 ## What the verifier checks
 
-1. **Well-formedness** – every line has six fields, hashes are 64-bit hex,
-   `0 < freq ≤ total < 2^31`, no duplicate positions.
+1. **Well-formedness** – every line has four fields (hash-only) or six,
+   hashes are 64-bit hex, `0 < freq ≤ total < 2^31` when present, no
+   duplicate positions.
 2. **Chain integrity** – it recomputes the `ALL` digest from the per-token
    lines; editing a single line breaks it.
 3. **Agreement** – it compares a candidate log against a reference log
@@ -167,7 +169,8 @@ The raw batched logs are in `samples/batched/` and are re-checked by step 3 abov
 
 Don Wick, *Idemcore: Bit-Identical LLM Inference from Phones to Datacenter
 GPUs, with an Open Per-Token Verification Protocol*, preprint, Zenodo,
-2026. DOI: [10.5281/zenodo.23851129](https://doi.org/10.5281/zenodo.23851129).
+2026, version 1.1. DOI: [10.5281/zenodo.23949090](https://doi.org/10.5281/zenodo.23949090)
+(all versions: [10.5281/zenodo.23851128](https://doi.org/10.5281/zenodo.23851128)).
 Citation metadata: [CITATION.cff](CITATION.cff).
 
 ## What this does **not** prove
