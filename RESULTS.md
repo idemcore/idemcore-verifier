@@ -19,7 +19,7 @@ between sessions (see "Variance"), so treat cross-session differences under
 ## 1. Bit-exactness
 
 Every published pair in [samples/](samples/) passes `./verify_samples.sh`:
-per-token logits hash `h` and integer-CDF hash `hc` are identical at every
+per-token logits hash `h` and selection-table hash `hc` are identical at every
 compared position.
 
 | Model | Devices with identical hashes | Positions compared |

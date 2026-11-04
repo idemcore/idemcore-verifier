@@ -8,9 +8,10 @@ A log is a text file with one line per generated/scored token:
   pi     payload (sequence) index, decimal
   j      token position inside the payload, decimal
   h      FNV-1a-64 of the V int32 logits (little-endian), 16 hex digits
-  hc     FNV-1a-64 of the (V+1) uint64 integer CDF table (little-endian), 16 hex
-  freq   CDF width of the observed token: CUM[t+1] - CUM[t], decimal
-  total  CDF total CUM[V], decimal, 0 < total < 2**31
+  hc     FNV-1a-64 of the engine's integer token-selection table (uint64, LE), 16 hex
+  freq   opaque engine-defined integer for the observed token, decimal
+  total  opaque engine-defined integer, decimal; 0 < freq <= total < 2**31
+         (freq/total are range-checked and compared, but are not part of ALL)
 
 The hosted API serves the *public* form of the same log
 (``idemcore-log/r1-public``): the first four fields only,
@@ -89,7 +90,7 @@ class Log:
 
 
 def read_lines(path: str) -> List[str]:
-    """Read a log as ASCII lines; files ending in .gz are decompressed."""
+    """Read a log as ASCII lines; files ending in .gz are read with gzip."""
     opener = gzip.open if path.endswith(".gz") else open
     with opener(path, "rt", encoding="ascii") as f:
         return f.read().splitlines()

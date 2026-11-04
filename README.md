@@ -9,8 +9,8 @@ Project site: <https://idemcore.net>
 Idemcore is an integer-only inference engine: the same model, prompt, and
 settings give the *same bits* on an x86 laptop, an ARM phone, and NVIDIA GPUs
 from Turing to Hopper. Every token it scores or generates emits a 64-bit hash
-of the full logit vector and a 64-bit hash of the integer sampling table
-(CDF). A run log is a list of these hashes plus one chained digest (`ALL`).
+of the full logit vector and a 64-bit hash of the integer token-selection
+table. A run log is a list of these hashes plus one chained digest (`ALL`).
 
 This repository is the **open half** of Idemcore:
 
@@ -122,7 +122,7 @@ Requires Python ≥ 3.9, standard library only.
 
 A match on `h` means the two machines computed the **same integer logits for
 the whole vocabulary** at that position, not just the same argmax token. A
-match on `hc` means they built the same integer sampling distribution, so any
+match on `hc` means they built the same integer token-selection table, so any
 seeded sampler driven by it makes the same choices.
 
 ## Published pairs

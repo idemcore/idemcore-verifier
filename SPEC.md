@@ -13,14 +13,13 @@ Status: draft. Byte order is little-endian throughout.
 | `pi` | decimal | payload (sequence / request) index |
 | `j` | decimal | position inside the payload (0-based) |
 | `h` | 16 hex | FNV-1a-64 over the `V` logits, each a signed 32-bit integer, LE, in vocabulary order |
-| `hc` | 16 hex | FNV-1a-64 over the `V+1` cumulative-frequency entries `CUM[0..V]`, each an unsigned 64-bit integer, LE |
-| `freq` | decimal | `CUM[t+1] - CUM[t]`, where `t` is the token actually observed / emitted at this position |
-| `total` | decimal | `CUM[V]`; always `0 < total < 2^31` |
+| `hc` | 16 hex | FNV-1a-64 over the engine's integer token-selection table, each entry an unsigned 64-bit integer, LE |
+| `freq` | decimal | opaque, engine-defined integer for the token actually observed / emitted at this position |
+| `total` | decimal | opaque, engine-defined integer; always `0 < freq ≤ total < 2^31` |
 
 `V` is the model's vocabulary size (151 936 for Qwen2.5-0.5B, 152 064 for Qwen2.5-7B, 201 088 for gpt-oss).
-`CUM` is the integer sampling table: `CUM[0] = 0`, non-decreasing, every token
-has width ≥ 1. The probability the engine assigns to token `t` is exactly
-`freq / total` — a rational number, identical on every device.
+`freq` and `total` are opaque integers: the verifier checks their range and
+compares them between logs, but they are not part of `ALL`.
 
 FNV-1a-64: offset basis `0xcbf29ce484222325`, prime `0x100000001b3`,
 `h = (h XOR byte) * prime mod 2^64` per byte.
@@ -91,7 +90,7 @@ ALL <s> <16 hex>
       a = FNV1a64(le64(ALL[s]), start=a)
   ```
 
-Files may be gzip-compressed (`.log.gz`). `python3 -m idemcore_verify
+Files may be gzipped (`.log.gz`). `python3 -m idemcore_verify
 check-batch` recomputes every stream's `ALL` and the `STREAMS` digest;
 `compare-batch REF BATCH` checks every row of `BATCH` against a single-stream
 reference keyed by `(pi, j)`.
@@ -99,7 +98,7 @@ reference keyed by `(pi, j)`.
 ## Producing a log from your own engine
 
 Nothing in the format is specific to Idemcore. Any engine that exposes
-integer logits and an integer CDF can emit it; floating-point engines can hash
+integer logits and an integer token-selection table can emit it; floating-point engines can hash
 the raw bit patterns of their fp32 logits (`h`) and leave `hc` as the hash of
 an empty buffer, which already lets you test their run-to-run and
 cross-device reproducibility with this tool.

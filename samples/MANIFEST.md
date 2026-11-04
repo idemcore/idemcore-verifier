@@ -33,7 +33,7 @@ lines present). Subset pairs are checked position by position.
 ## Batched GPU logs
 
 `batched/qwen2.5-7b-int4-g/{nvidia_a10g,nvidia_a10}/`: 20 files per GPU,
-gzip-compressed, format in [SPEC.md § Batched logs](../SPEC.md#batched-logs).
+gzipped, format in [SPEC.md § Batched logs](../SPEC.md#batched-logs).
 
 * `w512_b{1,8,16,32,64}.log.gz`: W512 workload, `B` streams in slot order.
 * `w512_b{16,32,64}_{shuffled,staggered}.log.gz`: shuffled slot order;
