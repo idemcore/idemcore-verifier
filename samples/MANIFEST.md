@@ -88,8 +88,9 @@ These logs were converted from the original run output to the hash-only form: on
 
 `qwen2.5-7b-4bit-h-seeded/<gpu>.log`: 256 generations (64 prompts × 4 seeds
 1001, 1002, 1003, 1004), temperature 0.7, top-k 50, top-p 0.90, 128 new
-tokens each, hash-only form. Every file has `ALL 8774afd4535d0cb7` and
-37,800 token rows. PAIRS.tsv compares each GPU with the NVIDIA A10 log
+tokens each, hash-only form. Every file has `ALL 8774afd4535d0cb7`.
+Each log also includes the checked prompt positions; prompts differ in length, so each generation has 144–151 rows and each file has 37,800 rows.
+PAIRS.tsv compares each GPU with the NVIDIA A10 log
 position by position.
 
 | File | Device | Date (Asia/Saigon, UTC+7) | Positions | ALL |

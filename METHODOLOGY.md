@@ -15,7 +15,8 @@ Everything here can be reproduced with public tools. The numbers in
   logs line up by `(payload, position)`.
 * **Qwen2.5-7B-Instruct, 4-bit (h), 256 generations:** 64 prompts × 4 seeds
   (1001, 1002, 1003, 1004), temperature 0.7, top-k 50, top-p 0.90, exactly
-  128 new tokens per generation. Logs line up by `(generation, position)`.
+  128 new tokens per generation. Each log also includes the checked prompt positions; prompts differ in length, so each generation has 144–151 rows and each file has 37,800 rows.
+  Logs line up by `(generation, position)`.
   This is a generate-and-compare workload, not teacher forcing. An additional
   64-position teacher-forced request on the public 4-bit (h) workload is used
   only as an anchor to the already published digest `ALL 9560d1ac36828c79`;

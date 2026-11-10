@@ -118,6 +118,7 @@ For the H100 reference runs and the 27B/35B runs on other GPUs, the digests are 
 
 Workload: 64 prompts × 4 seeds (1001, 1002, 1003, 1004) = 256 generations,
 temperature 0.7, top-k 50, top-p 0.90, 128 new tokens per generation.
+Each log also includes the checked prompt positions; prompts differ in length, so each generation has 144–151 rows and each file has 37,800 rows.
 Every GPU gives the same `ALL`, and each is compared position by position
 with the NVIDIA A10 log (PAIRS.tsv).
 
