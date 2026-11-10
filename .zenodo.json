@@ -1,0 +1,37 @@
+{
+  "title": "idemcore-verifier: open log format, verifier and evidence for bit-identical LLM inference across CPUs, phones and GPUs",
+  "upload_type": "software",
+  "version": "0.3.5",
+  "creators": [
+    {
+      "name": "Wick, Don",
+      "orcid": "0009-0003-0259-8288",
+      "affiliation": "MATEIAM COMPANY LIMITED"
+    }
+  ],
+  "description": "<p>Open half of Idemcore, an LLM inference engine whose runs are bit-identical across x86-64 CPUs, ARM phones and NVIDIA GPUs. This archive contains the hash-log format specification (v1, including multi-stream logs), a dependency-free Python verifier, the measurement methodology, and raw per-token hash logs from real runs on x86-64, Windows ARM64, a Galaxy Z Fold5 (Android) and NVIDIA GPUs from Turing to Blackwell, for Qwen2.5-0.5B, Qwen2.5-7B (8-bit and 4-bit), gpt-oss-20b/120b, Idemcore 27B and Idemcore 35B (MoE), single-stream and with many concurrent streams. One command (<code>python3 -m idemcore_verify samples</code>) recomputes every published digest from the logs and prints PASS or FAIL.</p><p>The inference engine itself is not included and is not open source.</p>",
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "keywords": [
+    "reproducibility",
+    "bit-exact inference",
+    "deterministic inference",
+    "large language models",
+    "verification",
+    "cross-device"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://idemcore.net",
+      "relation": "isDocumentedBy",
+      "resource_type": "other"
+    },
+    {
+      "identifier": "10.5281/zenodo.23851128",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    }
+  ],
+  "language": "eng"
+}

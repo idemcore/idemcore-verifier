@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "idemcore-verify"
+dynamic = ["version"]
+description = "Check Idemcore per-token hash logs: verify, without trusting us, that two machines produced bit-identical LLM inference."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Don Wick", email = "don.wick@idemcore.net" }]
+keywords = ["reproducibility", "deterministic inference", "llm", "verification", "bit-identical inference"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://idemcore.net"
+Paper = "https://doi.org/10.5281/zenodo.23851128"
+Source = "https://github.com/idemcore/idemcore-verifier"
+Issues = "https://github.com/idemcore/idemcore-verifier/issues"
+
+[project.scripts]
+idemcore-verify = "idemcore_verify.__main__:main"
+
+[tool.setuptools]
+packages = ["idemcore_verify"]
+
+[tool.setuptools.dynamic]
+version = { attr = "idemcore_verify.__version__" }

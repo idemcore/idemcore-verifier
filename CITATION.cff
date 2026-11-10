@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use these logs or the verifier, please cite them as below."
+title: "idemcore-verifier: open log format, verifier and evidence for bit-identical LLM inference across CPUs, phones and GPUs"
+version: 0.3.5
+date-released: "2026-11-11"
+license: Apache-2.0
+type: software
+authors:
+  - family-names: Wick
+    given-names: Don
+    email: don.wick@idemcore.net
+    orcid: "https://orcid.org/0009-0003-0259-8288"
+    affiliation: "MATEIAM COMPANY LIMITED"
+url: "https://idemcore.net"
+repository-code: "https://github.com/idemcore/idemcore-verifier"
+keywords:
+  - reproducibility
+  - deterministic inference
+  - large language models
+  - bit-identical inference
+  - verification
+preferred-citation:
+  type: report
+  title: "Idemcore: Bit-Identical LLM Inference from Phones to Datacenter GPUs, with an Open Per-Token Verification Protocol"
+  authors:
+    - family-names: Wick
+      given-names: Don
+      orcid: "https://orcid.org/0009-0003-0259-8288"
+      affiliation: "MATEIAM COMPANY LIMITED"
+  doi: 10.5281/zenodo.23851128
+  year: 2026
+  publisher:
+    name: Zenodo
