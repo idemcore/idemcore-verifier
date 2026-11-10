@@ -118,3 +118,11 @@ idemcore-27b/nvidia_rtx_5090_dec.log	single	Idemcore 27B	D32x64	NVIDIA GeForce R
 idemcore-35b-moe/nvidia_a100_short.log	single	Idemcore 35B (MoE)	S4x128	NVIDIA A100 80GB	1	-	512	af3e1f4abc44d136	-
 idemcore-35b-moe/nvidia_a100_eval.log	single	Idemcore 35B (MoE)	E4x128+1x2048	NVIDIA A100 80GB	1	-	2560	3e2948d2deaadc71	-
 idemcore-35b-moe/nvidia_a100_dec.log	single	Idemcore 35B (MoE)	D32x64	NVIDIA A100 80GB	1	-	2048	87953767681c3354	-
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA A10	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_l40s.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA L40S	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_a100.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA A100 80GB	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_h100.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA H100 80GB	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_h200.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA H200 141GB	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_rtx_pro_6000.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA RTX PRO 6000 Blackwell 96GB	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_l4.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA L4 24GB	1	-	37800	8774afd4535d0cb7	-
+qwen2.5-7b-4bit-h-seeded/nvidia_b200.log	single	Qwen2.5-7B 4-bit (h)	W256gen	NVIDIA B200 180GB	1	-	37800	8774afd4535d0cb7	-

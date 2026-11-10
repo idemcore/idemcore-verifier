@@ -31,11 +31,24 @@ position.
 | gpt-oss-20b (MoE) | x86-64 CPU, NVIDIA L40S | 512 |
 | gpt-oss-120b (MoE) | x86-64 CPU (128-token spot check), NVIDIA H100 | 128 |
 | Qwen2.5-7B-Instruct, 4-bit (h) | NVIDIA H100, H200, A100, B200, L4, RTX PRO 6000, GeForce RTX 3090, RTX 4090, RTX 5090 | 64 per GPU; batched B = 8–128 (stream `ALL` digests equal across GPUs) |
+| Qwen2.5-7B-Instruct, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new tokens) | NVIDIA A10, L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 positions per GPU; every log has `ALL 8774afd4535d0cb7` |
 | Idemcore 27B | NVIDIA A100, H200, GeForce RTX 3090, RTX 5090 (logs published); `ALL` equal to the H100 reference digest | 5120 per GPU (3 test sets) |
 | Idemcore 35B (MoE) | NVIDIA A100 (log published); `ALL` equal to the H100 reference digest | 5120 (3 test sets) |
 
 Qwen2.5-7B 4-bit (g) on the Fold5 matches the x86 log on the first 128
 positions (phone log `ALL 8d694e5c633851cc`).
+
+The 256-generation logs (temperature 0.7, top-k 50, top-p 0.90, 128 new
+tokens) are in `samples/qwen2.5-7b-4bit-h-seeded/`. All eight GPUs give
+`ALL 8774afd4535d0cb7`, and each of the seven pairs against the A10 log
+is identical at 37,800/37,800 positions. The same 256 generations were
+also submitted in reverse order, and eight of them were also run one at
+a time; those repeats matched pass A on every GPU. NVIDIA T4 was not
+run: this model is not supported on T4 in the engine used (a coverage
+gap, not a failure). GeForce RTX 3090, 4090 and 5090 were not offered
+by the machine pool used, so they were not run. The L4 log is from
+2026-11-11; the other seven are from 2026-11-10.
+
 
 
 ### Control: other engines

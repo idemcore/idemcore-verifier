@@ -28,7 +28,7 @@ You do not need it to check a claim: the verifier only needs two logs.
 You need `git` and Python ≥ 3.9. No GPU, no model and no third-party package.
 
 ```sh
-# 1. get the verifier and the sample logs (about 7 MB)
+# 1. get the verifier and the sample logs (about 19 MB)
 git clone https://github.com/idemcore/idemcore-verifier.git
 cd idemcore-verifier
 
@@ -50,7 +50,7 @@ python3 -m unittest discover -s tests
 Expected output of step 3:
 
 ```
-checked 119 logs (572548 token rows) and 76 pairs
+checked 127 logs (874948 token rows) and 83 pairs
 PASS: every published hash recomputes and every pair is bit-identical
 ```
 
@@ -62,9 +62,9 @@ OK   samples/gpt-oss-20b/nvidia_l40s.log: 512 tokens, ALL 8ec348aaf3b4109c (reco
 MATCH: 512/512 positions identical (mode exact; only-in-ref 0, only-in-cand 0)
 ```
 
-Step 3 recomputes all 119 published digests in
-[samples/HASHES.tsv](samples/HASHES.tsv) from the shipped logs (about 573 000
-token rows, including batched GPU logs) and re-checks all 76 pairs in
+Step 3 recomputes all 127 published digests in
+[samples/HASHES.tsv](samples/HASHES.tsv) from the shipped logs (about 875 000
+token rows, including batched GPU logs) and re-checks all 83 pairs in
 [samples/PAIRS.tsv](samples/PAIRS.tsv). To prove the check is not a rubber
 stamp, edit any hex digit in a log and run it again: the chain breaks.
 
@@ -144,6 +144,7 @@ output, is also identical.
 | gpt-oss-20b (MoE) | x86-64 CPU | NVIDIA L40S | 512 | identical |
 | gpt-oss-120b (MoE) | x86-64 CPU (spot check) | NVIDIA H100 | 128 of 512 | identical |
 | Qwen2.5-7B, 4-bit (h) | NVIDIA H100 | NVIDIA H200, A100, B200, L4, RTX PRO 6000, GeForce RTX 3090, RTX 4090, RTX 5090 | 64 per GPU; batched B = 8–128, every stream's `ALL` equal across GPUs (29 batched logs) | identical |
+| Qwen2.5-7B, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new tokens) | NVIDIA A10 | NVIDIA L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 positions per GPU; every log has `ALL 8774afd4535d0cb7` | identical |
 | Idemcore 27B | NVIDIA A100 | NVIDIA H200, GeForce RTX 3090, RTX 5090 | 3 test sets, 5120 positions per GPU; every `ALL` equals the H100 reference digest | identical |
 | Idemcore 35B (MoE) | H100 reference digest (log not published) | NVIDIA A100 | 3 test sets, 5120 positions | `ALL` equal to the reference |
 

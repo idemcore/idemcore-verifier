@@ -130,7 +130,7 @@ def parse_log(path: str, lines: Optional[Iterable[str]] = None) -> Log:
         except ValueError as e:
             errors.append(f"line {n}: {e}")
             continue
-        if total is not None and not (0 < total < 2 ** 31):
+        if total is not None and not (total > 0):
             errors.append(f"line {n}: legacy field total {total} out of range")
         if freq is not None and total is not None and not (0 < freq <= total):
             errors.append(f"line {n}: freq {freq} not in (0, total]")
@@ -285,7 +285,7 @@ def parse_batch_log(path: str, lines: Optional[Iterable[str]] = None) -> BatchLo
         except ValueError as e:
             errors.append(f"line {n}: {e}")
             continue
-        if total is not None and not (0 < total < 2 ** 31):
+        if total is not None and not (total > 0):
             errors.append(f"line {n}: legacy field total {total} out of range")
         if freq is not None and total is not None and not (0 < freq <= total):
             errors.append(f"line {n}: freq {freq} not in (0, total]")

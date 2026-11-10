@@ -75,3 +75,10 @@ idemcore-27b/nvidia_a100_dec.log	idemcore-27b/nvidia_rtx_3090_dec.log	exact	Idem
 idemcore-27b/nvidia_a100_short.log	idemcore-27b/nvidia_rtx_5090_short.log	exact	Idemcore 27B, S4x128, NVIDIA A100 vs NVIDIA GeForce RTX 5090 32GB, 512 positions
 idemcore-27b/nvidia_a100_eval.log	idemcore-27b/nvidia_rtx_5090_eval.log	exact	Idemcore 27B, E4x128+1x2048, NVIDIA A100 vs NVIDIA GeForce RTX 5090 32GB, 2560 positions
 idemcore-27b/nvidia_a100_dec.log	idemcore-27b/nvidia_rtx_5090_dec.log	exact	Idemcore 27B, D32x64, NVIDIA A100 vs NVIDIA GeForce RTX 5090 32GB, 2048 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_l40s.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA L40S, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_a100.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA A100 80GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_h100.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA H100 80GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_h200.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA H200 141GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_rtx_pro_6000.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA RTX PRO 6000 Blackwell 96GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_l4.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA L4 24GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_b200.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA B200 180GB, 37800 positions

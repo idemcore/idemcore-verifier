@@ -83,6 +83,32 @@ Batch sizes per GPU: H100, H200, A100, RTX PRO 6000, B200: 8/32/64/128; RTX 4090
 
 These logs were converted from the original run output to the hash-only form: only the per-token hash fields and the `ALL` lines were kept.
 
+
+## Qwen2.5-7B 4-bit (h), 256 generations
+
+`qwen2.5-7b-4bit-h-seeded/<gpu>.log`: 256 generations (64 prompts × 4 seeds
+1001, 1002, 1003, 1004), temperature 0.7, top-k 50, top-p 0.90, 128 new
+tokens each, hash-only form. Every file has `ALL 8774afd4535d0cb7` and
+37,800 token rows. PAIRS.tsv compares each GPU with the NVIDIA A10 log
+position by position.
+
+| File | Device | Date (Asia/Saigon, UTC+7) | Positions | ALL |
+|---|---|---|---|---|
+| qwen2.5-7b-4bit-h-seeded/nvidia_a10.log | NVIDIA A10 (reference) | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_l40s.log | NVIDIA L40S | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_a100.log | NVIDIA A100 80GB | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_h100.log | NVIDIA H100 80GB | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_h200.log | NVIDIA H200 141GB | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_rtx_pro_6000.log | NVIDIA RTX PRO 6000 Blackwell 96GB | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_b200.log | NVIDIA B200 180GB | 2026-11-10 | 37800 | 8774afd4535d0cb7 |
+| qwen2.5-7b-4bit-h-seeded/nvidia_l4.log | NVIDIA L4 24GB | 2026-11-11 | 37800 | 8774afd4535d0cb7 |
+
+These logs were converted from the original run output to the hash-only form:
+only the per-token hash fields and the `ALL` line were kept. NVIDIA T4 was
+not run (this model is not supported on T4 in the engine used; a coverage
+gap, not a failure). GeForce RTX 3090, 4090 and 5090 were not offered by
+the machine pool used, so they were not run.
+
 ## Idemcore 27B and Idemcore 35B (MoE)
 
 `idemcore-27b/<gpu>_{short,eval,dec}.log` and `idemcore-35b-moe/nvidia_a100_{short,eval,dec}.log`: same hash form as the logs above (`pi j h hc`, one line per position, then `ALL`), three fixed teacher-forced test sets per model:

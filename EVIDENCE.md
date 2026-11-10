@@ -113,6 +113,29 @@ Three fixed teacher-forced test sets per model: `short` (4 × 128 positions), `e
 
 For the H100 reference runs and the 27B/35B runs on other GPUs, the digests are recorded but the raw logs are not published.
 
+
+## 1d. Qwen2.5-7B 4-bit (h), 256 generations, eight NVIDIA GPUs
+
+Workload: 64 prompts × 4 seeds (1001, 1002, 1003, 1004) = 256 generations,
+temperature 0.7, top-k 50, top-p 0.90, 128 new tokens per generation.
+Every GPU gives the same `ALL`, and each is compared position by position
+with the NVIDIA A10 log (PAIRS.tsv).
+
+| GPU | Date (Asia/Saigon, UTC+7) | Positions | ALL | File |
+|---|---|---|---|---|
+| NVIDIA A10 (reference) | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_a10.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_a10.log) |
+| NVIDIA L40S | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_l40s.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_l40s.log) |
+| NVIDIA A100 80GB | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_a100.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_a100.log) |
+| NVIDIA H100 80GB | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_h100.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_h100.log) |
+| NVIDIA H200 141GB | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_h200.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_h200.log) |
+| NVIDIA RTX PRO 6000 Blackwell 96GB | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_rtx_pro_6000.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_rtx_pro_6000.log) |
+| NVIDIA B200 180GB | 2026-11-10 | 37800 | `8774afd4535d0cb7` | [nvidia_b200.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_b200.log) |
+| NVIDIA L4 24GB | 2026-11-11 | 37800 | `8774afd4535d0cb7` | [nvidia_l4.log](samples/qwen2.5-7b-4bit-h-seeded/nvidia_l4.log) |
+
+Not run (coverage gaps, not failures): NVIDIA T4 (this model is not supported
+on T4 in the engine used); GeForce RTX 3090, 4090 and 5090 (not offered by
+the machine pool used).
+
 ## 2. Batched GPU logs (Qwen2.5-7B 4-bit (g))
 
 Format: [SPEC.md § Batched logs](SPEC.md#batched-logs). One file holds `B` concurrent streams. `ALL[0]` is stream 0's chained digest; `STREAMS` is a digest over every stream's `ALL` (it changes if any stream changes). Every row of every stream (including warm-up filler slots of staggered runs) is also compared against the single-stream x86-64 log by `(payload, position)`; all rows match.
