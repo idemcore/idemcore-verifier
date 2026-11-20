@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.7 (unreleased)
+## 0.3.7 (2026-11-20)
 
 * New log format v2 (`idemcore-log/v2`), recommended for new logs: SHA-256
   for every per-position digest and a SHA-256 `CHAIN` line over the format
