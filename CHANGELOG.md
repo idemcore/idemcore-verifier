@@ -7,6 +7,9 @@
   Windows 11 ARM64 laptop (Snapdragon X Plus) CPU 0.5B W240 and Adreno X1-85
   GPU 0.5B W240, W3260 and 7B 4-bit (g) first 128. Self-check: 128 logs,
   879,132 rows, 115 pairs. No code change.
+* `samples/` adds the gpt-oss-120b x86-64 CPU W512 log (same `CHAIN` as
+  NVIDIA H100, all 512 positions). Self-check: 129 logs, 879,644 rows,
+  116 pairs. No code change.
 
 ## 0.4.0 (2026-11-20)
 

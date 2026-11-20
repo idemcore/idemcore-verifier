@@ -131,10 +131,11 @@ the verifier reads them directly.
 | batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64_staggered.log.gz | batch | Qwen2.5-7B 4-bit (g) | W512 | NVIDIA A10G | 64 | staggered joins | 32768 |
 | batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b8.log.gz | batch | Qwen2.5-7B 4-bit (g) | W512 | NVIDIA A10G | 8 | in order | 4096 |
 | gpt-oss-20b/x86_64.log | single | gpt-oss-20b (MoE) | W512 | x86-64 CPU, 8 threads | 1 | - | 512 |
+| gpt-oss-120b/x86_64.log | single | gpt-oss-120b (MoE) | W512 | x86-64 CPU, 16 cores | 1 | - | 512 |
 | qwen2.5-7b-int8/android_fold5_first64.log | single | Qwen2.5-7B 8-bit | W512 first 64 | Galaxy Z Fold5, 4 threads | 1 | - | 64 |
 | qwen2.5-0.5b-int8/windows_arm64_cpu_sub240.log | single | Qwen2.5-0.5B 8-bit | W240 | Windows 11 ARM64 laptop (Snapdragon X Plus) CPU, 1 thread | 1 | - | 240 |
 | qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85_sub240.log | single | Qwen2.5-0.5B 8-bit | W240 | Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU | 1 | - | 240 |
 | qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85.log | single | Qwen2.5-0.5B 8-bit | W3260 | Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU | 1 | - | 3260 |
 | qwen2.5-7b-int4-g/windows_arm64_adreno_x1_85_first128.log | single | Qwen2.5-7B 4-bit (g) | W128 | Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU | 1 | - | 128 |
 
-128 logs, 879132 rows.
+129 logs, 879644 rows.

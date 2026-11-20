@@ -31,9 +31,9 @@ Everything here can be reproduced with public tools. The numbers in
   log.
 * A pair counts as **identical** only if `h` and `hc` agree at every
   compared position (`idemcore_verify compare`).
-* For the largest models, CPU reference time is limited, so we compare a
-  spot-check subset (gpt-oss-120b: first 32 positions of each of the 4
-  payloads, 128 positions). These runs are labelled "subset".
+* gpt-oss-120b was first compared on a spot-check subset (first 32
+  positions of each of the 4 payloads, 128 positions). The format v2 x86-64
+  CPU log now covers all 512 positions and matches NVIDIA H100 exactly.
 
 ## Hardware and logging
 

@@ -26,7 +26,7 @@ identical at every compared position. Format v2 logs available now: see
 | Qwen2.5-7B-Instruct, 8-bit | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 64 (Fold5; format v2 log published) |
 | Qwen2.5-7B-Instruct, 4-bit (g) | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 128 (Fold5) |
 | gpt-oss-20b (MoE) | x86-64 CPU, NVIDIA L40S | 512 |
-| gpt-oss-120b (MoE) | x86-64 CPU (128-position spot check), NVIDIA H100 | 128 |
+| gpt-oss-120b (MoE) | x86-64 CPU, NVIDIA H100 | 512 |
 | Qwen2.5-7B-Instruct, 4-bit (h) | NVIDIA H100, H200, A100, B200, L4, RTX PRO 6000, GeForce RTX 3090, RTX 4090, RTX 5090 | 64 per GPU; batched B = 8–128 (stream chain digests equal across GPUs) |
 | Qwen2.5-7B-Instruct, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new positions) | NVIDIA A10, L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 rows per GPU (prompt positions and 128 new positions); every log has the same chain digest |
 | Idemcore 27B | NVIDIA A100, H200, GeForce RTX 3090, RTX 5090 (format v2 logs published) | 5120 per GPU (3 test sets) |

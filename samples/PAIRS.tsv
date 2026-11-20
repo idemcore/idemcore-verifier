@@ -114,3 +114,4 @@ qwen2.5-0.5b-int8/x86_64_sub240.log	qwen2.5-0.5b-int8/windows_arm64_cpu_sub240.l
 qwen2.5-0.5b-int8/x86_64_sub240.log	qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85_sub240.log	exact	Qwen2.5-0.5B 8-bit, x86 vs Adreno X1-85 GPU (Snapdragon X Plus laptop), 240 positions
 qwen2.5-0.5b-int8/x86_64.log	qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85.log	exact	Qwen2.5-0.5B 8-bit, x86 vs Adreno X1-85 GPU (Snapdragon X Plus laptop), 3260 positions
 qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/windows_arm64_adreno_x1_85_first128.log	subset	Qwen2.5-7B 4-bit (g), x86 vs Adreno X1-85 GPU (Snapdragon X Plus laptop), first 128 positions
+gpt-oss-120b/nvidia_h100.log	gpt-oss-120b/x86_64.log	exact	gpt-oss-120b (MoE), x86-64 CPU vs NVIDIA H100, 512 positions

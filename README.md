@@ -50,7 +50,7 @@ python3 -m unittest discover -s tests
 Expected output of step 3:
 
 ```
-checked 128 logs (879132 rows) and 115 pairs
+checked 129 logs (879644 rows) and 116 pairs
 PASS: every published CHAIN recomputes and every pair is bit-identical
 ```
 
@@ -165,7 +165,7 @@ The last column says whether the format v2 log of that result is in
 | Qwen2.5-7B, 4-bit (g) | x86-64 CPU | x86-64 CPU, independent second run (6 threads) | 512 | identical | in `samples/` |
 | Qwen2.5-7B, 4-bit (g) | x86-64 CPU | NVIDIA A10G and A10, batched B = 1–64, shuffled and staggered (40 logs) | every row of every stream | identical | in `samples/` |
 | gpt-oss-20b (MoE) | x86-64 CPU | NVIDIA L40S | 512 | identical | in `samples/` |
-| gpt-oss-120b (MoE) | x86-64 CPU (spot check) | NVIDIA H100 | 128 of 512 | identical | GPU log in `samples/`; CPU spot check pending |
+| gpt-oss-120b (MoE) | x86-64 CPU | NVIDIA H100 | 512 | identical | in `samples/` |
 | Qwen2.5-7B, 4-bit (h) | x86-64 CPU and NVIDIA H100 | NVIDIA H200, A100, B200, L4, RTX PRO 6000, GeForce RTX 3090, RTX 4090, RTX 5090 | 64 per GPU; batched B = 8–128 (29 logs), every row of every stream against the x86-64 CPU log | identical | in `samples/` |
 | Qwen2.5-7B, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new positions) | NVIDIA A10 | NVIDIA L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 rows per GPU (prompt positions and 128 new positions); every log has the same `CHAIN` | identical | in `samples/` |
 | Idemcore 27B | NVIDIA A100 | NVIDIA H200, GeForce RTX 3090, RTX 5090 | 3 test sets, 5120 positions per GPU | identical | in `samples/` |
