@@ -1,0 +1,110 @@
+# reference	candidate	mode	what
+qwen2.5-0.5b-int8/x86_64.log	qwen2.5-0.5b-int8/x86_64_run2.log	exact	0.5B W3260: two independent CPU runs
+qwen2.5-0.5b-int8/x86_64_sub240.log	qwen2.5-0.5b-int8/x86_64_sub240_run2.log	exact	0.5B W240: two independent CPU runs
+qwen2.5-0.5b-int8/x86_64.log	qwen2.5-0.5b-int8/x86_64_sub240.log	subset	0.5B W240 is contained in W3260
+qwen2.5-7b-int8/x86_64.log	qwen2.5-7b-int8/x86_64_run2.log	exact	7B 8-bit W512: two independent CPU runs
+qwen2.5-7b-int8/x86_64.log	qwen2.5-7b-int8/x86_64_first64.log	subset	7B 8-bit first 64 contained in W512
+qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/x86_64_run2.log	exact	7B 4-bit g W512: two independent CPU runs
+qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/x86_64_first128.log	subset	7B 4-bit g first 128 contained in W512
+qwen2.5-0.5b-int8/x86_64.log	qwen2.5-0.5b-int8/nvidia_t4.log	exact	Qwen2.5-0.5B int8, x86-64 CPU vs NVIDIA T4 (sm_75), 3260 positions
+qwen2.5-0.5b-int8/x86_64_sub240.log	qwen2.5-0.5b-int8/android_fold5_sub240.log	exact	Qwen2.5-0.5B int8, x86 vs Samsung Galaxy Z Fold5 (Snapdragon 8 Gen 2, Android 16), 240 positions
+qwen2.5-7b-int8/x86_64.log	qwen2.5-7b-int8/nvidia_a10.log	exact	Qwen2.5-7B 8-bit, x86 vs NVIDIA A10 (sm_86), 512 positions
+qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/nvidia_a10.log	exact	Qwen2.5-7B 4-bit (variant g), x86 vs A10, 512 positions
+qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/android_fold5_first128.log	subset	Qwen2.5-7B 4-bit (variant g), x86 vs Galaxy Z Fold5 (4 big cores), first 128 positions
+qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/android_fold5_first128_pathA.log	subset	Qwen2.5-7B 4-bit (g), x86 vs Galaxy Z Fold5 repeat run 1, first 128 positions
+qwen2.5-7b-int4-g/x86_64.log	qwen2.5-7b-int4-g/android_fold5_first128_pathB.log	subset	Qwen2.5-7B 4-bit (g), x86 vs Galaxy Z Fold5 repeat run 2, first 128 positions
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b1.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=1, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b8.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=8, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b16.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=16, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b32.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=32, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=64, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b16_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=16, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=32, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=64, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b16_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=16, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=32, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w512_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W512, B=64, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b1.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=1, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b8.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=8, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b16.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=16, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b32.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=32, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b64.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=64, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=32, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=64, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=32, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10g/w128_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10G, W128, B=64, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b1.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=1, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b8.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=8, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b16.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=16, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b32.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=32, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b64.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=64, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b16_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=16, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=32, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=64, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b16_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=16, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=32, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w512_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W512, B=64, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b1.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=1, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b8.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=8, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b16.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=16, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=32, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=64, in order: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=32, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64_shuffled.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=64, shuffled slots: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=32, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-7b-int4-g/x86_64.log	batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64_staggered.log.gz	batch	Qwen2.5-7B 4-bit (g), NVIDIA A10, W128, B=64, staggered joins: every row of every stream vs single-stream x86
+qwen2.5-0.5b-int8/x86_64.log	qwen2.5-0.5b-int8/android_fold5.log	exact	Qwen2.5-0.5B int8, x86 vs Samsung Galaxy Z Fold5 (Snapdragon 8 Gen 2, Android 16), 3260 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_rtx_pro_6000.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA RTX PRO 6000 Blackwell 96GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_rtx_4090.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA GeForce RTX 4090 24GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_rtx_3090.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA GeForce RTX 3090 24GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_rtx_5090.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA GeForce RTX 5090 32GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_a100.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA A100 80GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_h200.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA H200 141GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_l4.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA L4 24GB, 64 positions
+qwen2.5-7b-4bit-h/nvidia_h100.log	qwen2.5-7b-4bit-h/nvidia_b200.log	exact	Qwen2.5-7B 4-bit (h), NVIDIA H100 vs NVIDIA B200 180GB, 64 positions
+idemcore-27b/nvidia_a100_short.log	idemcore-27b/nvidia_h200_short.log	exact	Idemcore 27B, S4x128, NVIDIA A100 vs NVIDIA H200 141GB, 512 positions
+idemcore-27b/nvidia_a100_eval.log	idemcore-27b/nvidia_h200_eval.log	exact	Idemcore 27B, E4x128+1x2048, NVIDIA A100 vs NVIDIA H200 141GB, 2560 positions
+idemcore-27b/nvidia_a100_dec.log	idemcore-27b/nvidia_h200_dec.log	exact	Idemcore 27B, D32x64, NVIDIA A100 vs NVIDIA H200 141GB, 2048 positions
+idemcore-27b/nvidia_a100_short.log	idemcore-27b/nvidia_rtx_3090_short.log	exact	Idemcore 27B, S4x128, NVIDIA A100 vs NVIDIA GeForce RTX 3090 24GB, 512 positions
+idemcore-27b/nvidia_a100_eval.log	idemcore-27b/nvidia_rtx_3090_eval.log	exact	Idemcore 27B, E4x128+1x2048, NVIDIA A100 vs NVIDIA GeForce RTX 3090 24GB, 2560 positions
+idemcore-27b/nvidia_a100_dec.log	idemcore-27b/nvidia_rtx_3090_dec.log	exact	Idemcore 27B, D32x64, NVIDIA A100 vs NVIDIA GeForce RTX 3090 24GB, 2048 positions
+idemcore-27b/nvidia_a100_short.log	idemcore-27b/nvidia_rtx_5090_short.log	exact	Idemcore 27B, S4x128, NVIDIA A100 vs NVIDIA GeForce RTX 5090 32GB, 512 positions
+idemcore-27b/nvidia_a100_eval.log	idemcore-27b/nvidia_rtx_5090_eval.log	exact	Idemcore 27B, E4x128+1x2048, NVIDIA A100 vs NVIDIA GeForce RTX 5090 32GB, 2560 positions
+idemcore-27b/nvidia_a100_dec.log	idemcore-27b/nvidia_rtx_5090_dec.log	exact	Idemcore 27B, D32x64, NVIDIA A100 vs NVIDIA GeForce RTX 5090 32GB, 2048 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_l40s.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA L40S, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_a100.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA A100 80GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_h100.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA H100 80GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_h200.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA H200 141GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_rtx_pro_6000.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA RTX PRO 6000 Blackwell 96GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_l4.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA L4 24GB, 37800 positions
+qwen2.5-7b-4bit-h-seeded/nvidia_a10.log	qwen2.5-7b-4bit-h-seeded/nvidia_b200.log	exact	Qwen2.5-7B 4-bit (h), 256 generations, NVIDIA A10 vs NVIDIA B200 180GB, 37800 positions
+qwen2.5-7b-4bit-h/x86_64.log	qwen2.5-7b-4bit-h/nvidia_h100.log	exact	Qwen2.5-7B 4-bit (h), x86-64 CPU vs NVIDIA H100 80GB, 64 positions
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_a100/s64_b128.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA A100 80GB, W64, B=128: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_a100/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA A100 80GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_a100/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA A100 80GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_a100/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA A100 80GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_b200/s64_b128.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA B200 180GB, W64, B=128: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_b200/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA B200 180GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_b200/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA B200 180GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_b200/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA B200 180GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h100/s64_b128.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H100 80GB, W64, B=128: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h100/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H100 80GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h100/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H100 80GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h100/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H100 80GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h200/s64_b128.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H200 141GB, W64, B=128: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h200/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H200 141GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h200/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H200 141GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_h200/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA H200 141GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_l4/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA L4 24GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_l4/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA L4 24GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_l4/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA L4 24GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_4090/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA GeForce RTX 4090 24GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_4090/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA GeForce RTX 4090 24GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_4090/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA GeForce RTX 4090 24GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_5090/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA GeForce RTX 5090 32GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_5090/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA GeForce RTX 5090 32GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_5090/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA GeForce RTX 5090 32GB, W64, B=8: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_pro_6000/s64_b128.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA RTX PRO 6000 Blackwell 96GB, W64, B=128: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_pro_6000/s64_b32.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA RTX PRO 6000 Blackwell 96GB, W64, B=32: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_pro_6000/s64_b64.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA RTX PRO 6000 Blackwell 96GB, W64, B=64: every row of every stream vs single-stream x86
+qwen2.5-7b-4bit-h/x86_64.log	batched/qwen2.5-7b-4bit-h/nvidia_rtx_pro_6000/s64_b8.log.gz	batch	Qwen2.5-7B 4-bit (h), NVIDIA RTX PRO 6000 Blackwell 96GB, W64, B=8: every row of every stream vs single-stream x86

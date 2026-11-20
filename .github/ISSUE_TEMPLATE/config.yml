@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Pilot or licensing questions
+    url: https://idemcore.net/#access
+    about: Questions about running Idemcore on your own hardware. This repository only covers the log format and the verifier.
