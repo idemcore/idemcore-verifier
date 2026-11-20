@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Command line: python -m idemcore_verify {check,compare,check-batch,compare-batch,samples} ..."""
+"""Command line: python -m idemcore_verify {check,compare,check-batch,compare-batch,seal,samples} ..."""
 from __future__ import annotations
 
 import argparse
@@ -8,10 +8,14 @@ import json
 import os
 import sys
 
-from .core import (check_batch_log, check_log, compare_batch, compare_logs,
-                   parse_batch_log, parse_log)
+from .core import (V1, check_batch_log, check_log, compare_batch, compare_logs,
+                   parse_batch_log, parse_log, read_lines)
 from . import __version__
 from .samples import run_samples
+
+
+def _kw(fmt):
+    return "CHAIN" if fmt == "v2" else "ALL"
 
 
 def _print_check(path, res, as_json):
@@ -19,18 +23,20 @@ def _print_check(path, res, as_json):
         print(json.dumps({"file": path, **dataclasses.asdict(res)}))
         return
     status = "OK  " if res.ok else "FAIL"
-    print(f"{status} {path}: {res.n_tokens} tokens, ALL {res.all_claimed} "
-          f"(recomputed {res.all_recomputed})")
+    kw = _kw(res.format)
+    print(f"{status} {path}: format {res.format}, {res.n_tokens} positions, {kw} {res.all_claimed} "
+          f"(recomputed {res.all_recomputed})" + (f", SEAL ok" if res.seal and res.ok else ""))
     for e in res.errors[:20]:
         print(f"     - {e}")
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(prog="idemcore-verify",
-                                 description="Check Idemcore per-token hash logs.")
+    ap = argparse.ArgumentParser(
+        prog="idemcore-verify",
+        description="Check Idemcore per-position hash logs (format v2, SHA-256; and the legacy format v1).")
     ap.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    c = sub.add_parser("check", help="validate a log and recompute its ALL chain")
+    c = sub.add_parser("check", help="validate a log and recompute its chained digest (CHAIN or ALL)")
     c.add_argument("logs", nargs="+")
     c.add_argument("--json", action="store_true")
     m = sub.add_parser("compare", help="compare a candidate log against a reference log")
@@ -39,12 +45,16 @@ def main(argv=None) -> int:
     m.add_argument("--subset", action="store_true",
                    help="allow one log to cover only part of the other (spot check)")
     m.add_argument("--json", action="store_true")
-    cb = sub.add_parser("check-batch", help="validate a batched (multi-stream) log and recompute every stream's ALL")
+    cb = sub.add_parser("check-batch", help="validate a batched (multi-stream) log and recompute every stream's digest")
     cb.add_argument("logs", nargs="+")
     mb = sub.add_parser("compare-batch",
                         help="compare every row of a batched log against a single-stream reference log")
     mb.add_argument("reference")
     mb.add_argument("batch")
+    se = sub.add_parser("seal", help="add a SHA-256 SEAL line to a legacy format v1 log "
+                        "(after checking its ALL line); writes a new file")
+    se.add_argument("log")
+    se.add_argument("-o", "--output", help="output file (default: print the SEAL line only)")
     sm = sub.add_parser("samples", help="one-command self-check: recompute every published hash in "
                         "samples/HASHES.tsv and re-check every pair in samples/PAIRS.tsv")
     sm.add_argument("--dir", default=None, help="samples directory (default: ./samples)")
@@ -62,12 +72,37 @@ def main(argv=None) -> int:
             return 2
         return run_samples(d, verbose=a.verbose)
 
+    if a.cmd == "seal":
+        log = parse_log(a.log)
+        r = check_log(log)
+        if log.fmt != V1:
+            print(f"FAIL {a.log}: SEAL applies to format v1 logs only (format v2 already uses SHA-256)",
+                  file=sys.stderr)
+            return 1
+        if not r.ok:
+            _print_check(a.log, r, False)
+            return 1
+        line = f"SEAL {log.seal()}"
+        if not a.output:
+            print(line)
+            return 0
+        if log.seal_hex is not None:
+            print(f"FAIL {a.log}: already has a SEAL line", file=sys.stderr)
+            return 1
+        lines = read_lines(a.log)
+        with open(a.output, "w", encoding="ascii", newline="\n") as f:
+            f.write("\n".join(lines) + "\n" + line + "\n")
+        r2 = check_log(parse_log(a.output))
+        _print_check(a.output, r2, False)
+        return 0 if r2.ok else 1
+
     if a.cmd == "check-batch":
         ok = True
         for p in a.logs:
             r = check_batch_log(parse_batch_log(p))
-            print(f"{'OK  ' if r.ok else 'FAIL'} {p}: {r.n_streams} streams, {r.n_rows} rows "
-                  f"({r.n_filler_rows} filler), ALL[0] {r.all_by_stream.get(0)}, STREAMS {r.streams_digest}")
+            kw = _kw(r.format)
+            print(f"{'OK  ' if r.ok else 'FAIL'} {p}: format {r.format}, {r.n_streams} streams, {r.n_rows} rows "
+                  f"({r.n_filler_rows} filler), {kw}[0] {r.all_by_stream.get(0)}, STREAMS {r.streams_digest}")
             for e in r.errors[:20]:
                 print(f"     - {e}")
             ok &= r.ok
@@ -79,9 +114,11 @@ def main(argv=None) -> int:
         res = compare_batch(ref, b)
         ok = rr.ok and rb.ok and res.ok
         _print_check(a.reference, rr, False)
-        print(f"{'OK  ' if rb.ok else 'FAIL'} {a.batch}: {rb.n_streams} streams, {rb.n_rows} rows")
+        print(f"{'OK  ' if rb.ok else 'FAIL'} {a.batch}: format {rb.format}, {rb.n_streams} streams, {rb.n_rows} rows")
         for e in rb.errors[:20]:
             print(f"     - {e}")
+        if res.error:
+            print(f"  error: {res.error}")
         print(f"{'MATCH' if ok else 'DIVERGE'}: {res.matched}/{res.compared} batched rows identical to the "
               f"reference (missing in reference {res.missing_in_ref})")
         if res.first_divergence:
@@ -107,6 +144,8 @@ def main(argv=None) -> int:
     else:
         _print_check(a.reference, rr, False)
         _print_check(a.candidate, rc, False)
+        if res.error:
+            print(f"  error: {res.error}")
         print(f"{'MATCH' if ok else 'DIVERGE'}: {res.matched}/{res.compared} positions identical "
               f"(mode {res.mode}; only-in-ref {res.only_in_ref}, only-in-cand {res.only_in_cand})")
         if res.first_divergence:

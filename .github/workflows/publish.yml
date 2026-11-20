@@ -1,6 +1,6 @@
 name: publish
 
-# Publishes idemcore-verify to PyPI with Trusted Publishing (no stored token).
+# Publishes idemcore-verify to PyPI with Trusted Publishing (no stored secret).
 # One-time setup on pypi.org: add a pending publisher for project "idemcore-verify",
 # owner "idemcore", repository "idemcore-verifier", workflow "publish.yml", environment "pypi".
 

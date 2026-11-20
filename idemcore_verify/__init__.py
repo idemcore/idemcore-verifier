@@ -1,5 +1,5 @@
-"""idemcore-verify: check Idemcore per-token hash logs.
+"""idemcore-verify: check Idemcore per-position hash logs.
 
 Pure Python standard library. No model, no engine, no GPU needed.
 """
-__version__ = "0.3.6"
+__version__ = "0.3.7"

@@ -6,4 +6,6 @@
   `PAIRS.tsv`, and the throughput to EVIDENCE.md.
 * **More models.** Qwen2.5-1.5B (or 0.5B) and a ~14B model with the same
   cross-device and batched evidence.
-* **Collision-resistant log variant** (SHA-256 / BLAKE3), as noted in the README.
+* **Format v2 emission from the engine.** Verifier 0.3.7 defines and checks
+  format v2 (SHA-256). Next: the engine and the hosted API emit v2 logs, and
+  new evidence runs are published in v2 alongside the existing v1 logs.

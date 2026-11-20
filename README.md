@@ -8,16 +8,18 @@ Project site: <https://idemcore.net>
 
 Idemcore is an inference engine where the same model, prompt, and
 settings give the *same bits* on an x86 laptop, an ARM phone, and NVIDIA GPUs
-from Turing to Blackwell. Every token it scores or generates emits two 64-bit
-hashes of its output at that position. A run log is a list of these hashes
-plus one chained digest (`ALL`).
+from Turing to Blackwell. At every position it scores or generates, it emits
+two digests of its output at that position. A run log is a list of these
+digests plus one chained digest. New logs use SHA-256 (format v2, `CHAIN`);
+every log published up to 0.3.6 uses the legacy 64-bit checksum format v1
+(`ALL`) and keeps verifying unchanged.
 
 This repository is the **open half** of Idemcore:
 
 * the log format and hash protocol ([SPEC.md](SPEC.md)),
 * a small, dependency-free Python verifier (`idemcore_verify/`),
 * the measurement methodology ([METHODOLOGY.md](METHODOLOGY.md)),
-* raw per-token logs from real cross-device runs (`samples/`) and the results
+* raw per-position logs from real cross-device runs (`samples/`) and the results
   table they back ([RESULTS.md](RESULTS.md)).
 
 The inference engine itself is not in this repository and is not open source.
@@ -50,21 +52,21 @@ python3 -m unittest discover -s tests
 Expected output of step 3:
 
 ```
-checked 127 logs (874948 token rows) and 83 pairs
+checked 127 logs (874948 rows) and 83 pairs
 PASS: every published hash recomputes and every pair is bit-identical
 ```
 
 and of step 4:
 
 ```
-OK   samples/gpt-oss-20b/x86_64.log: 512 tokens, ALL 8ec348aaf3b4109c (recomputed 8ec348aaf3b4109c)
-OK   samples/gpt-oss-20b/nvidia_l40s.log: 512 tokens, ALL 8ec348aaf3b4109c (recomputed 8ec348aaf3b4109c)
+OK   samples/gpt-oss-20b/x86_64.log: format v1, 512 positions, ALL 8ec348aaf3b4109c (recomputed 8ec348aaf3b4109c)
+OK   samples/gpt-oss-20b/nvidia_l40s.log: format v1, 512 positions, ALL 8ec348aaf3b4109c (recomputed 8ec348aaf3b4109c)
 MATCH: 512/512 positions identical (mode exact; only-in-ref 0, only-in-cand 0)
 ```
 
 Step 3 recomputes all 127 published digests in
 [samples/HASHES.tsv](samples/HASHES.tsv) from the shipped logs (about 875 000
-token rows, including batched GPU logs) and re-checks all 83 pairs in
+rows, including batched GPU logs) and re-checks all 83 pairs in
 [samples/PAIRS.tsv](samples/PAIRS.tsv). To prove the check is not a rubber
 stamp, edit any hex digit in a log and run it again: the chain breaks.
 
@@ -76,11 +78,11 @@ required; every `make` target is a one-line Python command.
 
 The hosted API (`https://api.idemcore.net/v1`, OpenAI-compatible) attaches a
 receipt to every answer, and `GET /v1/receipts/{id}/log` returns that answer's
-per-token log. The API serves the public form of the log (`log_format`
+per-position log. The API serves the public form of the log (`log_format`
 `idemcore-log/r1-public`): the `pi j h hc` fields of [SPEC.md](SPEC.md) plus the
 `ALL` line, without `freq` and `total`. The verifier accepts both forms (version
 0.3.0 and later; hash-only batched logs from 0.3.2). The sample logs in
-`samples/` are published in the same hash-only form. Access needs an API key: sign in to the console at
+`samples/` are published in the same hash-only form (both are format v1). Access needs an API key: sign in to the console at
 <https://console.idemcore.net/#/login> and create one. With a key, save the log and run:
 
 ```sh
@@ -112,20 +114,45 @@ Requires Python ≥ 3.9, standard library only.
 
 ## What the verifier checks
 
-1. **Well-formedness** – every line has four fields (hash-only) or six
-   (legacy), hashes are 64-bit hex, legacy fields are well-formed when
-   present, no duplicate positions.
-2. **Chain integrity** – it recomputes the `ALL` digest from the per-token
-   lines; editing a single line breaks it.
+1. **Well-formedness** – format v2: every line has four fields in canonical
+   form and both digests are SHA-256 (64 hex). Format v1: four fields
+   (hash-only) or six (legacy), 16-hex digests, legacy fields well-formed
+   when present. No duplicate positions in either format.
+2. **Chain integrity** – it recomputes the chained digest (`CHAIN` in v2,
+   `ALL` in v1, plus `SEAL` when a v1 log carries one) from the position
+   lines; editing a single line breaks it. A v2 `CHAIN` can also be
+   recomputed with `sha256sum` alone (see [SPEC.md](SPEC.md)).
 3. **Agreement** – it compares a candidate log against a reference log
    position by position, keyed by `(payload, position)`, and prints the first
-   divergence (which token, which field). `--subset` allows a short spot check
-   (e.g. 128 CPU tokens against a 512-token GPU run).
+   divergence (which position, which field). `--subset` allows a short spot check
+   (e.g. 128 CPU positions against a 512-position GPU run).
 
 A match on `h` means the two machines produced the **same output for the whole
-vocabulary** at that position, not just the same top token. A match on `hc`
-means the second per-token hash, which covers the engine's token-choice
+vocabulary** at that position, not just the same top choice. A match on `hc`
+means the second per-position hash, which covers the engine's choice
 output, is also identical.
+
+## Log formats
+
+* **Format v2** (`FORMAT idemcore-log/v2`, recommended): every per-position
+  digest is SHA-256 (64 hex) and the log ends with one `CHAIN` line, the
+  SHA-256 over the format tag and every position line. The chain covers
+  positions, order and digests, and can be recomputed without this tool:
+
+  ```sh
+  (printf 'idemcore-log/v2\n'; grep -E '^[0-9]' run.log) | sha256sum
+  ```
+
+  Example: [tests/vectors/v2_example.log](tests/vectors/v2_example.log)
+  (synthetic test vector).
+* **Format v1** (legacy 64-bit checksum format, `ALL` line): every log
+  published up to 0.3.6, including all logs in `samples/` and the current
+  hosted API form. It keeps verifying with every later verifier.
+  `idemcore-verify seal run.log -o run.sealed.log` adds an optional SHA-256
+  `SEAL` line to a v1 log without changing its `ALL`.
+
+The verifier detects the format from the file. A v2 log is compared only
+against another v2 log. Full text: [SPEC.md](SPEC.md).
 
 ## Published pairs
 
@@ -144,7 +171,7 @@ output, is also identical.
 | gpt-oss-20b (MoE) | x86-64 CPU | NVIDIA L40S | 512 | identical |
 | gpt-oss-120b (MoE) | x86-64 CPU (spot check) | NVIDIA H100 | 128 of 512 | identical |
 | Qwen2.5-7B, 4-bit (h) | NVIDIA H100 | NVIDIA H200, A100, B200, L4, RTX PRO 6000, GeForce RTX 3090, RTX 4090, RTX 5090 | 64 per GPU; batched B = 8–128, every stream's `ALL` equal across GPUs (29 batched logs) | identical |
-| Qwen2.5-7B, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new tokens) | NVIDIA A10 | NVIDIA L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 rows per GPU (prompt positions and 128 new tokens); every log has `ALL 8774afd4535d0cb7` | identical |
+| Qwen2.5-7B, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new positions) | NVIDIA A10 | NVIDIA L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 rows per GPU (prompt positions and 128 new positions); every log has `ALL 8774afd4535d0cb7` | identical |
 | Idemcore 27B | NVIDIA A100 | NVIDIA H200, GeForce RTX 3090, RTX 5090 | 3 test sets, 5120 positions per GPU; every `ALL` equals the H100 reference digest | identical |
 | Idemcore 35B (MoE) | H100 reference digest (log not published) | NVIDIA A100 | 3 test sets, 5120 positions | `ALL` equal to the reference |
 
@@ -153,7 +180,7 @@ Qwen2.5-7B 4-bit on Android runs at 3.39 tok/s on the Fold5 (see [RESULTS.md](RE
 
 **Batched GPU serving.** With batched GPU serving, Qwen2.5-7B 4-bit
 on an NVIDIA A10G serves up to 64 concurrent streams, and every stream's
-per-token hashes match a single-stream x86-64 run at batch sizes 1, 8, 16, 32
+per-position hashes match a single-stream x86-64 run at batch sizes 1, 8, 16, 32
 and 64, including shuffled slot order and staggered joins (0 mismatches).
 The same holds on an NVIDIA A10. Aggregate throughput (A10G): 641 tok/s at 8
 streams and 1372 tok/s at 32. Numbers and caveats:
@@ -183,9 +210,14 @@ Citation metadata: [CITATION.cff](CITATION.cff).
   it does not prove *which* program produced them. To check a provider, re-run
   the same request on hardware you control (or ask a second party to) and
   compare logs.
-* The hash is FNV-1a-64: fast and good for detecting accidental divergence,
-  **not** collision-resistant against an adversary who can choose logits. A
-  SHA-256 / BLAKE3 variant of the log is planned; the format has a version.
+* The published sample logs use the legacy format v1, whose 64-bit checksum
+  detects accidental divergence and edits to a published log but is **not**
+  collision-resistant against an adversary who can choose the logged values.
+  Format v2 (SHA-256 per position and for the chain) closes this for new
+  logs; `idemcore-verify seal` adds a SHA-256 `SEAL` line to an existing v1
+  log (its per-position digests stay 64-bit).
+* A digest log shows that two runs agree; on its own it does not prove which
+  device produced a log or when.
 
 ## License
 

@@ -6,9 +6,9 @@ Every hash below is recomputed from the shipped logs by one command:
 make verify            # or: python3 -m idemcore_verify samples
 ```
 
-It reads [samples/HASHES.tsv](samples/HASHES.tsv) (the published digests) and [samples/PAIRS.tsv](samples/PAIRS.tsv) (which log must match which), recomputes every chained digest from the per-token lines, re-compares every pair, and prints `PASS` or `FAIL`. Standard library only; about 4 seconds on a laptop.
+It reads [samples/HASHES.tsv](samples/HASHES.tsv) (the published digests) and [samples/PAIRS.tsv](samples/PAIRS.tsv) (which log must match which), recomputes every chained digest from the per-position lines, re-compares every pair, and prints `PASS` or `FAIL`. Standard library only; about 4 seconds on a laptop.
 
-Workloads (teacher-forced, the same token files on every device):
+Workloads (teacher-forced, the same input files on every device):
 
 | Workload | Positions | Expected `ALL` (Qwen2.5-7B 4-bit (g)) |
 |---|---|---|
@@ -117,7 +117,7 @@ For the H100 reference runs and the 27B/35B runs on other GPUs, the digests are 
 ## 1d. Qwen2.5-7B 4-bit (h), 256 generations, eight NVIDIA GPUs
 
 Workload: 64 prompts × 4 seeds (1001, 1002, 1003, 1004) = 256 generations,
-temperature 0.7, top-k 50, top-p 0.90, 128 new tokens per generation.
+temperature 0.7, top-k 50, top-p 0.90, 128 new positions per generation.
 Each log also includes the checked prompt positions; prompts differ in length, so each generation has 144–151 rows and each file has 37,800 rows.
 Every GPU gives the same `ALL`, and each is compared position by position
 with the NVIDIA A10 log (PAIRS.tsv).
@@ -191,7 +191,7 @@ Format: [SPEC.md § Batched logs](SPEC.md#batched-logs). One file holds `B` conc
 | W128 | 32 | staggered joins | 4096 | `8d694e5c633851cc` | `535aa115282d7598` |  | [w128_b32_staggered.log.gz](samples/batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b32_staggered.log.gz) |
 | W128 | 64 | staggered joins | 8192 | `8d694e5c633851cc` | `112f81d4bc97c1d0` |  | [w128_b64_staggered.log.gz](samples/batched/qwen2.5-7b-int4-g/nvidia_a10/w128_b64_staggered.log.gz) |
 
-The `STREAMS` digests are equal on A10G and A10 for every configuration, and equal between in-order and shuffled-slot runs of the same `B` (shuffling changes which slot serves which stream, not which stream gets which tokens). Staggered runs have a different `STREAMS` digest only because their stream set and stream contents differ by design; each of their rows still matches x86-64.
+The `STREAMS` digests are equal on A10G and A10 for every configuration, and equal between in-order and shuffled-slot runs of the same `B` (shuffling changes which slot serves which stream, not which stream gets which inputs). Staggered runs have a different `STREAMS` digest only because their stream set and stream contents differ by design; each of their rows still matches x86-64.
 
 Throughput is for W512 in slot order, teacher-forced GPU step time (see [RESULTS.md §2b](RESULTS.md#2b-batched-serving-qwen25-7b-4-bit-g-nvidia-a10g) for caveats and the vLLM comparison). A10G at 1710 MHz SM; A10 from the same cloud pool.
 

@@ -19,7 +19,7 @@ between sessions (see "Variance"), so treat cross-session differences under
 ## 1. Bit-exactness
 
 Every published pair in [samples/](samples/) passes `./verify_samples.sh`:
-both per-token hashes (`h` and `hc`) are identical at every compared
+both per-position hashes (`h` and `hc`) are identical at every compared
 position.
 
 | Model | Devices with identical hashes | Positions compared |
@@ -29,9 +29,9 @@ position.
 | Qwen2.5-7B-Instruct, 4-bit (g) | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 128 (Fold5) |
 | Qwen2.5-7B-Instruct, 4-bit (g4) | x86-64 CPU, NVIDIA A10G | 512 |
 | gpt-oss-20b (MoE) | x86-64 CPU, NVIDIA L40S | 512 |
-| gpt-oss-120b (MoE) | x86-64 CPU (128-token spot check), NVIDIA H100 | 128 |
+| gpt-oss-120b (MoE) | x86-64 CPU (128-position spot check), NVIDIA H100 | 128 |
 | Qwen2.5-7B-Instruct, 4-bit (h) | NVIDIA H100, H200, A100, B200, L4, RTX PRO 6000, GeForce RTX 3090, RTX 4090, RTX 5090 | 64 per GPU; batched B = 8–128 (stream `ALL` digests equal across GPUs) |
-| Qwen2.5-7B-Instruct, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new tokens) | NVIDIA A10, L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 rows per GPU (prompt positions and 128 new tokens); every log has `ALL 8774afd4535d0cb7` |
+| Qwen2.5-7B-Instruct, 4-bit (h), 256 generations (temperature 0.7, top-k 50, top-p 0.90, 128 new positions) | NVIDIA A10, L40S, A100, H100, H200, RTX PRO 6000, L4, B200 | 37,800 rows per GPU (prompt positions and 128 new positions); every log has `ALL 8774afd4535d0cb7` |
 | Idemcore 27B | NVIDIA A100, H200, GeForce RTX 3090, RTX 5090 (logs published); `ALL` equal to the H100 reference digest | 5120 per GPU (3 test sets) |
 | Idemcore 35B (MoE) | NVIDIA A100 (log published); `ALL` equal to the H100 reference digest | 5120 (3 test sets) |
 
@@ -39,9 +39,9 @@ Qwen2.5-7B 4-bit (g) on the Fold5 matches the x86 log on the first 128
 positions (phone log `ALL 8d694e5c633851cc`).
 
 The 256-generation logs (temperature 0.7, top-k 50, top-p 0.90, 128 new
-tokens) are in `samples/qwen2.5-7b-4bit-h-seeded/`. All eight GPUs give
+positions) are in `samples/qwen2.5-7b-4bit-h-seeded/`. All eight GPUs give
 `ALL 8774afd4535d0cb7`, and each of the seven pairs against the A10 log
-is identical at 37,800/37,800 rows (prompt positions and 128 new tokens). The same 256 generations were
+is identical at 37,800/37,800 rows (prompt positions and 128 new positions). The same 256 generations were
 also submitted in reverse order, and eight of them were also run one at
 a time; those repeats matched pass A on every GPU. NVIDIA T4 was not
 run: this model is not supported on T4 in the engine used (a coverage
@@ -58,16 +58,16 @@ by the machine pool used, so they were not run. The L4 log is from
   28 argmax flips. No server flag we tried (`-fa off`, `--no-repack`, f32 KV)
   made the two builds agree. x86 vs Snapdragon X (ARM64): 0/1127 identical
   top-50 lists, 24 argmax flips. Re-runs on the same machine were identical.
-* HF transformers (gpt-oss): token-by-token decode vs one parallel forward
+* HF transformers (gpt-oss): step-by-step decode vs one parallel forward
   pass on the same GPU disagree on argmax at 27/512 (20b) and 29/512 (120b)
   positions.
 
-## 2. Speed (single stream, tokens/s, higher is better)
+## 2. Speed (single stream, tok/s, higher is better)
 
 ### Qwen2.5-7B-Instruct on NVIDIA A10 (24 GB)
 
 Idemcore: 512 teacher-forced decode steps. llama.cpp server and vLLM: 3 × 256
-greedy tokens with EOS ignored, pooled inter-token latency (after one warm-up).
+greedy positions with EOS ignored, pooled inter-step latency (after one warm-up).
 Idemcore rows ran in a different session from the baselines (Idemcore 4-bit
 mean SM clock 1652 MHz; baselines' max SM clock 1695 MHz).
 
@@ -84,18 +84,18 @@ The vLLM rows were measured with vLLM 0.11.0 on 2026-10-30 and have not been re-
 
 ### Qwen2.5-7B-Instruct on NVIDIA A10G (24 GB), both at 1710 MHz SM
 
-| Engine | tok/s | p50 ms | p99 ms | J/token (board) | J/token (above idle) |
+| Engine | tok/s | p50 ms | p99 ms | J/tok (board) | J/tok (above idle) |
 |---|---|---|---|---|---|
 | **Idemcore 4-bit (g4), hashing on** | **98.64** | 10.15 | 10.27 | 1.61 | 1.45 |
 | llama-cpp-python 0.3.4 Q4_K_M | 92.37 | 10.75 | 13.12 | 2.53 | 2.40 |
 
 Caveat: the llama.cpp A10G run has only 129 latency samples and 11 power
-samples, and power is sampled coarsely (nvidia-smi). Treat J/token as
+samples, and power is sampled coarsely (nvidia-smi). Treat J/tok as
 indicative only.
 
 ### gpt-oss (MoE, teacher-forced 512 positions)
 
-| Model / GPU | Idemcore tok/s | p50 ms | p99 ms | HF transformers (MXFP4) median ms/token |
+| Model / GPU | Idemcore tok/s | p50 ms | p99 ms | HF transformers (MXFP4) median ms/tok |
 |---|---|---|---|---|
 | gpt-oss-20b / L40S | 72.1–72.2 | 13.9 | 14.0 | ~50 |
 | gpt-oss-120b / H100 | 37.1–37.3 | 26.9 | 27.4 | 77–80 |
@@ -120,7 +120,7 @@ a correctness demonstration, not a usable speed.
 
 Qwen2.5-7B 4-bit (g) on the Fold5 (Samsung SM-F946B, 4 big cores):
 128/128 positions bit-identical to x86, 3.39 tok/s including the
-first token (3.73 tok/s steady state; first token 3.6 s), p50 260 ms,
+first output (3.73 tok/s steady state; first output 3.6 s), p50 260 ms,
 p99 435 ms, peak RSS about 4.5 GB, peak thermal zone 90.7 °C. That is about
 13.6× the 8-bit run on the same phone. In a later session, two repeat runs on the
 Fold5 each matched x86 on all 128 positions with the same `ALL` digest; that session had less free memory and
@@ -128,8 +128,8 @@ was slower, so 3.39 tok/s remains the reference phone speed.
 
 Phone energy, **estimate**: read from the battery fuel gauge
 (`termux-battery-status`, 2 s sampling), not a power meter. Idle 2.62 W
-(n=19), during decoding 8.43 W (n=16): about 2.49 J/token total and
-1.71 J/token above idle. On this phone the gauge reports current in µA at idle
+(n=19), during decoding 8.43 W (n=16): about 2.49 J/tok total and
+1.71 J/tok above idle. On this phone the gauge reports current in µA at idle
 and in mA under load; we normalize before multiplying by voltage.
 
 **H100 serving figures.** The H100 7B serving figures on idemcore.net (3166–4775 tok/s) come from a newer engine build measured on the evening of 2026-11-01. Paper v1.1 reports 2729–4008 tok/s from an earlier build measured the same day. Both are real measurements of different builds.
@@ -137,7 +137,7 @@ and in mA under load; we normalize before multiplying by voltage.
 ## 2b. Batched serving (Qwen2.5-7B 4-bit (g), NVIDIA A10G)
 
 Batched GPU serving, A10G at 1710 MHz SM. `B` independent streams,
-512 teacher-forced positions each, both hashes computed for every token of
+512 teacher-forced positions each, both hashes computed for every position of
 every stream. Latency is the GPU step time for the whole batch.
 
 | B | Idemcore aggregate tok/s | Idemcore per-stream tok/s | step p50 / p99 ms | vLLM 0.11.0 AWQ aggregate tok/s |
@@ -160,9 +160,9 @@ every stream. Latency is the GPU step time for the whole batch.
   client-side generation timings (wall time including prefill), ranges over
   repeated runs. The comparison is indicative. One vLLM version (0.11.0) was
   used, at default settings; one GPU type; 8 prompts
-  × 512 greedy tokens.
+  × 512 greedy positions.
 
-**Bit identity under batching.** At B = 1, 8, 16, 32 and 64, every per-token
+**Bit identity under batching.** At B = 1, 8, 16, 32 and 64, every per-position
 `h` and `hc` of every stream matched the single-stream x86-64 log
 (0 mismatches), also with shuffled slot order and with streams joining at
 staggered times into reused slots. On the 128-position workload used for the
@@ -170,11 +170,11 @@ phone, the chained digest is `ALL 8d694e5c633851cc` at every batch size, the
 same as x86 and the Fold5.
 
 **Control: other serving stacks under batching.** 8 prompts × 512 greedy
-tokens (EOS ignored), each compared with its own first solo run:
+positions (EOS ignored), each compared with its own first solo run:
 
 | Engine (default settings unless noted) | Schedules | Outcome in our runs |
 |---|---|---|
-| vLLM 0.11.0 AWQ (prefix caching on) | solo repeat, B=8 ×3, shuffled order, mixed batches of 12 and 32, staggered arrivals | not bit-reproducible: greedy output changed for some prompts in at least one schedule; token-identical B=8 repeats still differed in logprobs |
+| vLLM 0.11.0 AWQ (prefix caching on) | solo repeat, B=8 ×3, shuffled order, mixed batches of 12 and 32, staggered arrivals | not bit-reproducible: greedy output changed for some prompts in at least one schedule; output-identical B=8 repeats still differed in logprobs |
 | vLLM 0.11.0 AWQ, prefix caching off | same | not bit-reproducible: outputs changed in at least one schedule; serial solo repeats also differed |
 | llama.cpp server Q4_K_M, `-np 8 -cb` | solo repeat, B=8 ×3, shuffled, staggered | solo repeat bit-identical; batched runs were not bit-identical to solo runs |
 | Idemcore 4-bit (g) | B=1–64, shuffled slots, staggered joins with slot reuse | bit-identical: 0 mismatches against the single-stream x86 log |

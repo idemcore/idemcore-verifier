@@ -2,7 +2,7 @@
 
 All logs are raw output of real runs, unedited except whitespace
 normalisation, removal of lines that format v1 does not use, and (since
-0.3.2) conversion to the hash-only form of [SPEC.md](../SPEC.md): each token
+0.3.2) conversion to the hash-only form of [SPEC.md](../SPEC.md): each position
 line keeps `pi j h hc` (batched: `s pi j h hc`). `ALL` and `STREAMS` depend
 only on `h` and `hc`, so every published digest is unchanged. Recompute any `ALL` with `python3 -m idemcore_verify check`.
 
@@ -70,25 +70,25 @@ gzipped, format in [SPEC.md § Batched logs](../SPEC.md#batched-logs).
   the 128-position phone workload.
 
 Expected `ALL[0]` and `STREAMS` digests for every file: [HASHES.tsv](HASHES.tsv).
-Logs were reduced to the lines defined by the format (token and `ALL` lines).
+Logs were reduced to the lines defined by the format (position lines and `ALL` lines).
 
 ## Qwen2.5-7B 4-bit (h) across nine NVIDIA GPUs
 
 `qwen2.5-7b-4bit-h/<gpu>.log`: one stream, 64 teacher-forced positions, hash-only form.
 Every file has `ALL 9560d1ac36828c79`, and PAIRS.tsv compares each GPU with the H100 log position by position.
 
-`batched/qwen2.5-7b-4bit-h/<gpu>/s64_b{8,32,64,128}.log.gz`: `B` concurrent streams of 64 positions each (stream `s` carries its own token sequence; stream 0 is the single-stream workload).
+`batched/qwen2.5-7b-4bit-h/<gpu>/s64_b{8,32,64,128}.log.gz`: `B` concurrent streams of 64 positions each (stream `s` carries its own input sequence; stream 0 is the single-stream workload).
 For each `B`, every GPU gives the same `ALL[0]` and the same `STREAMS` digest (see HASHES.tsv), so every stream's chain is identical across GPUs.
 Batch sizes per GPU: H100, H200, A100, RTX PRO 6000, B200: 8/32/64/128; RTX 4090, RTX 5090, L4: 8/32/64; RTX 3090: single stream (no batched logs).
 
-These logs were converted from the original run output to the hash-only form: only the per-token hash fields and the `ALL` lines were kept.
+These logs were converted from the original run output to the hash-only form: only the per-position hash fields and the `ALL` lines were kept.
 
 
 ## Qwen2.5-7B 4-bit (h), 256 generations
 
 `qwen2.5-7b-4bit-h-seeded/<gpu>.log`: 256 generations (64 prompts × 4 seeds
 1001, 1002, 1003, 1004), temperature 0.7, top-k 50, top-p 0.90, 128 new
-tokens each, hash-only form. Every file has `ALL 8774afd4535d0cb7`.
+positions each, hash-only form. Every file has `ALL 8774afd4535d0cb7`.
 Each log also includes the checked prompt positions; prompts differ in length, so each generation has 144–151 rows and each file has 37,800 rows.
 PAIRS.tsv compares each GPU with the NVIDIA A10 log
 position by position.
@@ -105,7 +105,7 @@ position by position.
 | qwen2.5-7b-4bit-h-seeded/nvidia_l4.log | NVIDIA L4 24GB | 2026-11-11 | 37800 | 8774afd4535d0cb7 |
 
 These logs were converted from the original run output to the hash-only form:
-only the per-token hash fields and the `ALL` line were kept. NVIDIA T4 was
+only the per-position hash fields and the `ALL` line were kept. NVIDIA T4 was
 not run (this model is not supported on T4 in the engine used; a coverage
 gap, not a failure). GeForce RTX 3090, 4090 and 5090 were not offered by
 the machine pool used, so they were not run.

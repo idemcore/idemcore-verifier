@@ -2,7 +2,7 @@
 """One-command self-check of the published evidence.
 
 1. For every row of samples/HASHES.tsv, recompute the log's digest(s) from its
-   per-token lines and compare with the published value.
+   position lines and compare with the published value.
 2. For every row of samples/PAIRS.tsv, compare candidate against reference
    (modes: exact, subset, batch).
 Prints PASS or FAIL and returns 0 / 1.
@@ -82,7 +82,7 @@ def run_samples(d: str, verbose: bool = False) -> int:
         if verbose or not ok:
             print(f"  {'PASS' if ok else 'FAIL'} {what}  ({detail})")
 
-    print(f"checked {n_files} logs ({n_rows} token rows) and {n_pairs} pairs")
+    print(f"checked {n_files} logs ({n_rows} rows) and {n_pairs} pairs")
     if failures:
         print(f"FAIL: {len(failures)} problem(s)")
         for f in failures:
