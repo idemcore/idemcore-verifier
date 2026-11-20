@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased (samples, 2026-11-21)
+
+* `samples/` adds 6 format v2 logs: gpt-oss-20b x86-64 CPU W512 (same `CHAIN`
+  as NVIDIA L40S), Galaxy Z Fold5 CPU Qwen2.5-7B 8-bit first 64, and the
+  Windows 11 ARM64 laptop (Snapdragon X Plus) CPU 0.5B W240 and Adreno X1-85
+  GPU 0.5B W240, W3260 and 7B 4-bit (g) first 128. Self-check: 128 logs,
+  879,132 rows, 115 pairs. No code change.
+
 ## 0.4.0 (2026-11-20)
 
 * Format v2 only. The verifier checks `FORMAT idemcore-log/v2` logs

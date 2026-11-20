@@ -22,8 +22,8 @@ identical at every compared position. Format v2 logs available now: see
 
 | Model | Devices with identical hashes | Positions compared |
 |---|---|---|
-| Qwen2.5-0.5B-Instruct, 8-bit | x86-64 CPU, NVIDIA T4, Windows 11 ARM64 (Snapdragon X Plus), Android (Galaxy Z Fold5, Snapdragon 8 Gen 2) | 3260 (T4, Fold5; format v2 logs published); 240 (Windows ARM64; format v2 log pending; its 3260-position run is a written record only, no raw log) |
-| Qwen2.5-7B-Instruct, 8-bit | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 64 (Fold5; format v2 log pending) |
+| Qwen2.5-0.5B-Instruct, 8-bit | x86-64 CPU, NVIDIA T4, Windows 11 ARM64 (Snapdragon X Plus), Android (Galaxy Z Fold5, Snapdragon 8 Gen 2) | 3260 (T4, Fold5; format v2 logs published); 240 (Windows ARM64 CPU) and 240 and 3260 (Windows ARM64 Adreno X1-85 GPU), format v2 logs published; the earlier 3260-position laptop CPU run is a written record only, no raw log |
+| Qwen2.5-7B-Instruct, 8-bit | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 64 (Fold5; format v2 log published) |
 | Qwen2.5-7B-Instruct, 4-bit (g) | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 128 (Fold5) |
 | gpt-oss-20b (MoE) | x86-64 CPU, NVIDIA L40S | 512 |
 | gpt-oss-120b (MoE) | x86-64 CPU (128-position spot check), NVIDIA H100 | 128 |
@@ -61,7 +61,7 @@ by the machine pool used, so they were not run. The L4 log is from
 ## 2. Phone runs and batched serving
 
 Qwen2.5-7B 8-bit on the Galaxy Z Fold5: 64/64 positions bit-identical to x86
-(format v2 log pending), peak RSS 3.76 GB.
+(format v2 log published), peak RSS 3.76 GB.
 
 Qwen2.5-7B 4-bit (g) on the Fold5 (Samsung SM-F946B, 4 big cores):
 128/128 positions bit-identical to x86, peak RSS about 4.5 GB. In a later
