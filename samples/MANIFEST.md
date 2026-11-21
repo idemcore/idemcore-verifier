@@ -137,5 +137,7 @@ the verifier reads them directly.
 | qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85_sub240.log | single | Qwen2.5-0.5B 8-bit | W240 | Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU | 1 | - | 240 |
 | qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85.log | single | Qwen2.5-0.5B 8-bit | W3260 | Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU | 1 | - | 3260 |
 | qwen2.5-7b-int4-g/windows_arm64_adreno_x1_85_first128.log | single | Qwen2.5-7B 4-bit (g) | W128 | Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU | 1 | - | 128 |
+| qwen2.5-0.5b-int8/android_fold5_hexagon_npu_sub240.log | single | Qwen2.5-0.5B 8-bit | W240 | Galaxy Z Fold5, Hexagon NPU, 4 threads | 1 | - | 240 |
+| qwen2.5-0.5b-int8/android_fold5_hexagon_npu.log | single | Qwen2.5-0.5B 8-bit | W3260 | Galaxy Z Fold5, Hexagon NPU, 4 threads | 1 | - | 3260 |
 
-129 logs, 879644 rows.
+131 logs, 883144 rows.

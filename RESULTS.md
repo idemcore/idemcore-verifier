@@ -22,7 +22,7 @@ identical at every compared position. Format v2 logs available now: see
 
 | Model | Devices with identical hashes | Positions compared |
 |---|---|---|
-| Qwen2.5-0.5B-Instruct, 8-bit | x86-64 CPU, NVIDIA T4, Windows 11 ARM64 (Snapdragon X Plus), Android (Galaxy Z Fold5, Snapdragon 8 Gen 2) | 3260 (T4, Fold5; format v2 logs published); 240 (Windows ARM64 CPU) and 240 and 3260 (Windows ARM64 Adreno X1-85 GPU), format v2 logs published; the earlier 3260-position laptop CPU run is a written record only, no raw log |
+| Qwen2.5-0.5B-Instruct, 8-bit | x86-64 CPU, NVIDIA T4, Windows 11 ARM64 (Snapdragon X Plus), Android (Galaxy Z Fold5, Snapdragon 8 Gen 2), Galaxy Z Fold5 Hexagon NPU | 3260 (T4, Fold5; format v2 logs published); 240 and 3260 (Fold5 Hexagon NPU, format v2 logs published); 240 (Windows ARM64 CPU) and 240 and 3260 (Windows ARM64 Adreno X1-85 GPU), format v2 logs published; the earlier 3260-position laptop CPU run is a written record only, no raw log |
 | Qwen2.5-7B-Instruct, 8-bit | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 64 (Fold5; format v2 log published) |
 | Qwen2.5-7B-Instruct, 4-bit (g) | x86-64 CPU, NVIDIA A10, Galaxy Z Fold5 | 512 (A10), 128 (Fold5) |
 | gpt-oss-20b (MoE) | x86-64 CPU, NVIDIA L40S | 512 |

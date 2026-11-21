@@ -10,6 +10,9 @@
 * `samples/` adds the gpt-oss-120b x86-64 CPU W512 log (same `CHAIN` as
   NVIDIA H100, all 512 positions). Self-check: 129 logs, 879,644 rows,
   116 pairs. No code change.
+* `samples/` adds the Galaxy Z Fold5 Hexagon NPU Qwen2.5-0.5B 8-bit W240 and
+  W3260 logs (same `CHAIN` as the x86-64 CPU). Self-check: 131 logs,
+  883,144 rows, 118 pairs. No code change.
 
 ## 0.4.0 (2026-11-20)
 

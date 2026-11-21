@@ -72,6 +72,7 @@ Adreno 740) and of the 0.5B run on NVIDIA A100, H100, L4 and RTX PRO 6000.
 |---|---|---|
 | gpt-oss-20b (MoE) W512, x86-64 CPU, 8 threads | [x86_64.log](samples/gpt-oss-20b/x86_64.log) | published; same `CHAIN` as NVIDIA L40S |
 | gpt-oss-120b (MoE) W512, x86-64 CPU, 16 cores | [x86_64.log](samples/gpt-oss-120b/x86_64.log) | published; same `CHAIN` as NVIDIA H100, all 512 positions |
+| Qwen2.5-0.5B 8-bit, Galaxy Z Fold5 Hexagon NPU, W240 and W3260 | [W240](samples/qwen2.5-0.5b-int8/android_fold5_hexagon_npu_sub240.log), [W3260](samples/qwen2.5-0.5b-int8/android_fold5_hexagon_npu.log) | published; same `CHAIN` as x86-64 CPU (`224cc35a…0027`, `7fee20db…f065`) |
 | Qwen2.5-7B 8-bit, Galaxy Z Fold5 CPU, first 64 | [android_fold5_first64.log](samples/qwen2.5-7b-int8/android_fold5_first64.log) | published |
 | Windows 11 ARM64 laptop (Snapdragon X Plus): CPU 0.5B W240; Adreno X1-85 GPU 0.5B W240 and W3260, 7B 4-bit (g) first 128 | [CPU W240](samples/qwen2.5-0.5b-int8/windows_arm64_cpu_sub240.log), [GPU W240](samples/qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85_sub240.log), [GPU W3260](samples/qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85.log), [GPU 7B first 128](samples/qwen2.5-7b-int4-g/windows_arm64_adreno_x1_85_first128.log) | published; written by the fixed logger with LF line endings. The earlier files with Windows line endings fail the check and are not published or edited |
 
@@ -79,7 +80,6 @@ Adreno 740) and of the 0.5B run on NVIDIA A100, H100, L4 and RTX PRO 6000.
 
 | Run | Status |
 |---|---|
-| Galaxy Z Fold5 Hexagon NPU (0.5B W240 and W3260) | not re-issued; unproven in format v2 |
 | x86-64 CPU repeat runs of Qwen2.5-7B 4-bit (g) (3 × 8 threads, 3 × 6 threads) | replaced by the independent second run above |
 
 Qwen2.5-7B 4-bit (g4) is withdrawn from the published evidence: its model

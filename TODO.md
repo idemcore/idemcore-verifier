@@ -8,5 +8,5 @@
   cross-device and batched evidence.
 * **Re-issue the remaining evidence in format v2.** gpt-oss-20b and
   gpt-oss-120b x86-64 CPU references, Galaxy Z Fold5 7B 8-bit first 64,
-  Snapdragon X Plus logs (Windows line endings), Hexagon NPU logs, and a
+  Snapdragon X Plus logs (Windows line endings), and a
   second device for Idemcore 35B (see EVIDENCE.md).

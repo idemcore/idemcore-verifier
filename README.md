@@ -50,7 +50,7 @@ python3 -m unittest discover -s tests
 Expected output of step 3:
 
 ```
-checked 129 logs (879644 rows) and 116 pairs
+checked 131 logs (883144 rows) and 118 pairs
 PASS: every published CHAIN recomputes and every pair is bit-identical
 ```
 
@@ -154,6 +154,7 @@ The last column says whether the format v2 log of that result is in
 |---|---|---|---|---|---|
 | Qwen2.5-0.5B, 8-bit | x86-64 CPU | NVIDIA T4 | 3260 | identical | in `samples/` |
 | Qwen2.5-0.5B, 8-bit | x86-64 CPU | Galaxy Z Fold5 (Android) | 3260 (full run) and 240 | identical | in `samples/` |
+| Qwen2.5-0.5B, 8-bit | x86-64 CPU | Galaxy Z Fold5 Hexagon NPU | 3260 (full run) and 240 | identical | in `samples/` |
 | Qwen2.5-0.5B, 8-bit | x86-64 CPU | Windows 11 ARM64 laptop (Snapdragon X Plus): CPU, and Adreno X1-85 GPU | 240 (CPU and GPU), 3260 (GPU) | identical | in `samples/` |
 | Qwen2.5-7B, 8-bit | x86-64 CPU | NVIDIA A10 | 512 | identical | in `samples/` |
 | Qwen2.5-7B, 8-bit | x86-64 CPU | Galaxy Z Fold5 (Android) | 64 (prefix) | identical | in `samples/` |

@@ -128,3 +128,5 @@ qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85_sub240.log	single	Qwen2.5-0.5B 8-bi
 qwen2.5-0.5b-int8/windows_arm64_adreno_x1_85.log	single	Qwen2.5-0.5B 8-bit	W3260	Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU	1	-	3260	7fee20dbe7c0c8490add7a4392de187cc08fd303bbef914b6e1b98e9d8c3f065	-
 qwen2.5-7b-int4-g/windows_arm64_adreno_x1_85_first128.log	single	Qwen2.5-7B 4-bit (g)	W128	Windows 11 ARM64 laptop (Snapdragon X Plus), Adreno X1-85 GPU	1	-	128	9320ecc5db7a3661f179672c7c156c9e1267afc997a873916b7fed293f747d01	-
 gpt-oss-120b/x86_64.log	single	gpt-oss-120b (MoE)	W512	x86-64 CPU, 16 cores	1	-	512	7f1e139bd7cdd6f11776f1668a1dfe2049ac8191c8d4d12140ac58f164d9f5fd	-
+qwen2.5-0.5b-int8/android_fold5_hexagon_npu_sub240.log	single	Qwen2.5-0.5B 8-bit	W240	Galaxy Z Fold5, Hexagon NPU, 4 threads	1	-	240	224cc35af810655edb2071f2dea6e8575b2f6db81edfeb4851a7261328340027	-
+qwen2.5-0.5b-int8/android_fold5_hexagon_npu.log	single	Qwen2.5-0.5B 8-bit	W3260	Galaxy Z Fold5, Hexagon NPU, 4 threads	1	-	3260	7fee20dbe7c0c8490add7a4392de187cc08fd303bbef914b6e1b98e9d8c3f065	-
